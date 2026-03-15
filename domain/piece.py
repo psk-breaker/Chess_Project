@@ -5,14 +5,18 @@ class Piece:
         self.piece_type = piece_type
         self.life = life
         self.location = location
-        self.move_history = None
+        self.move_history = []
+        self.move_history.append(location)
 
     def __str__(self):
         return f'{self.colour} {self.piece_type} {self.life} {self.location}'
 
     def __repr__(self):
         return f'Piece({self.colour!r}, {self.piece_type!r}, {self.life!r}, {self.location!r})'
-
+    
+    def move(self, target):
+        self.location = target
+        self.move_history.append(self.location)
 
 class King(Piece):
     def __init__(self, colour, life, location):
@@ -60,3 +64,6 @@ class Pawn(Piece):
     
     def __str__(self):
         return super().__str__()
+    
+    def move(self, target):
+        super().move(target)

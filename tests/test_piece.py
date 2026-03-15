@@ -7,7 +7,7 @@ def test_piece_initialisation():
     assert pawn.piece_type == 'pawn'
     assert pawn.life == 'active'
     assert pawn.location == 'e2'
-    assert pawn.move_history is None
+    assert pawn.move_history == ['e2']
 
 def test_piece_representation():
     pawn = Piece('black', 'pawn', 'captured', 'j0')
@@ -28,5 +28,5 @@ def test_all_piece_subclasses_initialising():
 def test_move_piece_to_target():
     p = Pawn('white', 'active', 'e2')
     p.move('e3')
-    assert str(p.location) == 'e3'
-    assert str(p.move_history) == ['e2', 'e3']
+    assert p.location == 'e3'
+    assert p.move_history == ['e2', 'e3']
