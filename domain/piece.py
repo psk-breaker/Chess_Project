@@ -15,7 +15,7 @@ class Piece:
 
 
 class King(Piece):
-    def __init__(self, colour, piece_type, life, location):
+    def __init__(self, colour, life, location):
         super().__init__(colour=colour, piece_type='king', life=life, location=location)
     
     def __str__(self):
@@ -23,7 +23,7 @@ class King(Piece):
 
 
 class Queen(Piece):
-    def __init__(self, colour, piece_type, life, location):
+    def __init__(self, colour, life, location):
         super().__init__(colour=colour, piece_type='queen', life=life, location=location)
     
     def __str__(self):
@@ -31,7 +31,7 @@ class Queen(Piece):
 
 
 class Bishop(Piece):
-    def __init__(self, colour, piece_type, life, location):
+    def __init__(self, colour, life, location):
         super().__init__(colour=colour, piece_type='bishop', life=life, location=location)
     
     def __str__(self):
@@ -39,7 +39,7 @@ class Bishop(Piece):
 
 
 class Knight(Piece):
-    def __init__(self, colour, piece_type, life, location):
+    def __init__(self, colour, life, location):
         super().__init__(colour=colour, piece_type='knight', life=life, location=location)
     
     def __str__(self):
@@ -47,7 +47,7 @@ class Knight(Piece):
     
 
 class Rook(Piece):
-    def __init__(self, colour, piece_type, life, location):
+    def __init__(self, colour, life, location):
         super().__init__(colour=colour, piece_type='rook', life=life, location=location)
     
     def __str__(self):
@@ -55,7 +55,7 @@ class Rook(Piece):
 
 
 class Pawn(Piece):
-    def __init__(self, colour, piece_type, life, location):
+    def __init__(self, colour, life, location):
         super().__init__(colour=colour, piece_type='pawn', life=life, location=location)
     
     def __str__(self):
