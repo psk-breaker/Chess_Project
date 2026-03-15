@@ -1,3 +1,4 @@
+import pytest
 from domain.piece import Piece, King, Queen, Bishop, Knight, Rook, Pawn
 
 
@@ -30,3 +31,27 @@ def test_move_piece_to_target():
     p.move('e3')
     assert p.location == 'e3'
     assert p.move_history == ['e2', 'e3']
+
+def test_pawn_move_rules():
+    p = Pawn('white', 'active', 'e2')
+    # No triple square movement
+    with pytest.raises(ValueError):
+        p.move('e5')
+    # Double square movement at start
+    p.move('e4')
+    # Only double square movement at start
+    with pytest.raises(ValueError):
+        p.move('e6')
+    # No lateral or backwards movements
+    with pytest.raises(ValueError):
+        p.move('f6')
+    with pytest.raises(ValueError):
+        p.move('f5')
+    with pytest.raises(ValueError):
+        p.move('e5')
+    # Diagonal capture only
+    with pytest.raises(ValueError):
+        p.move('f7')
+    # No pinned movement
+    # Enpassant
+    # Promotion => New piece instance with duplicated attribute info
