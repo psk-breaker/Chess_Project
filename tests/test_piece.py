@@ -1,4 +1,4 @@
-from domain.piece import Piece
+from domain.piece import Piece, King, Queen, Bishop, Knight, Rook, Pawn
 
 
 def test_piece_initialisation():
@@ -23,3 +23,4 @@ def test_all_piece_subclasses_initialising():
     assert str(Bishop('white', 'bishop', 'active', 'c1')) == 'white bishop active c1'
     assert str(Knight('white', 'knight', 'active', 'b1')) == 'white knight active b1'
     assert str(Rook('white', 'rook', 'active', 'a1')) == 'white rook active a1'
+    assert str(Pawn('white', 'pawn', 'active', 'a2')) == 'white pawn active a2'
