@@ -1,5 +1,6 @@
 import pytest
 from domain.piece import Piece, King, Queen, Bishop, Knight, Rook, Pawn
+from tests.test_board import Board
 
 
 def test_piece_initialisation():
@@ -52,11 +53,20 @@ def test_pawn_move_rules():
         p.move('e3')
 
     # No movement onto occupied squares
-    # obstacle = Pawn('white', 'active', 'e5')
-    # with pytest.raises(ValueError):
-    #    p.move('e5')
+    obstacle = Pawn('white', 'active', 'e5')
+    b = Board()
+    b.place_piece(p)
+    b.place_piece(obstacle)
+    with pytest.raises(ValueError):
+        b.move_piece(p, 'e5')
+    
 
     # Diagonal capture only
+    enemy = Pawn('black', 'active', 'f5')
+    b.move_piece(p, 'f5')
+    enemy = Pawn('black', 'active', 'g7')
+    b.move_piece(enemy, 'g6')
+    b.move_piece(enemy, 'f5')
     # No pinned movement
     # Enpassant
     # Promotion => New piece instance with duplicated attribute info
