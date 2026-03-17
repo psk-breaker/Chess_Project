@@ -94,7 +94,7 @@ class Pawn(Piece):
             return True
         else:
             raise ValueError(f'Only possible on first move')
-        
+    
     def move(self, target):
         if self.legal_move_check(target):
             super().move(target)
