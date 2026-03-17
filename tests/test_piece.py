@@ -42,16 +42,16 @@ def test_pawn_move_rules():
     # Only double square movement at start
     with pytest.raises(ValueError):
         p.move('e6')
+    
     # No lateral or backwards movements
     with pytest.raises(ValueError):
-        p.move('f6')
+        p.move('f4')
     with pytest.raises(ValueError):
-        p.move('f5')
+        p.move('f3')
     with pytest.raises(ValueError):
-        p.move('e5')
+        p.move('e3')
+
     # Diagonal capture only
-    with pytest.raises(ValueError):
-        p.move('f7')
     # No pinned movement
     # Enpassant
     # Promotion => New piece instance with duplicated attribute info

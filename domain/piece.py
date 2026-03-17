@@ -65,5 +65,37 @@ class Pawn(Piece):
     def __str__(self):
         return super().__str__()
     
+    def legal_move_check(self, target):
+        rank_check = 0
+        if self.colour == 'white':
+            rank_check = int(target[1]) - int(self.location[1])
+        elif self.colour == 'black':
+            rank_check = int(self.location[1]) - int(target[1])
+        
+        file_check = True if self.location[0] == target[0] else False
+
+        if rank_check == 1:
+            if file_check:
+                # Just permitting a 1 rank move within file
+                return True
+        if rank_check == 2 and file_check:
+            if self.starting_move_check(target):
+                # Just permitting a double rank move for first move
+                return True
+        if rank_check >= 3:
+            raise ValueError(f'Too many ranks crossed')
+        if rank_check <= 0:
+            raise ValueError(f'Try moving forward')
+        if file_check == False:
+            raise ValueError(f'Crossing files without permission')
+
+    def starting_move_check(self, target):
+        if len(self.move_history) == 1:
+            return True
+        else:
+            raise ValueError(f'Only possible on first move')
+        
     def move(self, target):
-        super().move(target)
+        if self.legal_move_check(target):
+            super().move(target)
+            self.location = target
