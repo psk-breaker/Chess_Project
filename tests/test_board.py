@@ -27,3 +27,10 @@ def test_remove_piece():
     b.place_piece(p)
     b.remove_piece('h1')
     assert b.get_piece('h1') == 0
+
+def test_move_piece():
+    b = Board()
+    p = Pawn('white', 'active', 'e2')
+    b.place_piece(p)
+    b.move_piece(p, 'e3')
+
