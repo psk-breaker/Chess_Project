@@ -51,6 +51,11 @@ def test_pawn_move_rules():
     with pytest.raises(ValueError):
         p.move('e3')
 
+    # No movement onto occupied squares
+    obstacle = Pawn('white', 'active', 'e5')
+    with pytest.raises(ValueError):
+        p.move('e5')
+
     # Diagonal capture only
     # No pinned movement
     # Enpassant
