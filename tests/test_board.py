@@ -13,3 +13,11 @@ def test_place_piece_on_board():
     p = Pawn('white', 'active', 'e2')
     b.place_piece(p)
     assert b.grid[6][4] == p
+
+def test_get_piece():
+    b = Board()
+    p = Pawn('black', 'active', 'd7')
+    b.place_piece(p)
+    piece = b.get_piece('d7')
+    assert piece == p
+
