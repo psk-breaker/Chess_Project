@@ -1,4 +1,4 @@
-
+FILE = 'abcdefgh'
 
 class Board:
 
@@ -11,4 +11,8 @@ class Board:
                 rank.append(square)
             self.grid.append(rank)
             rank = []
-        
+    
+    def place_piece(self, piece):
+        rank = -int(piece.location[1])
+        file = FILE.index(piece.location[0])
+        self.grid[rank][file] = piece
