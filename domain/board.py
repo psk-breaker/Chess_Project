@@ -21,3 +21,11 @@ class Board:
         rank = -int(square[1])
         file = FILE.index(square[0])
         return self.grid[rank][file]
+    
+    def remove_piece(self, square):
+        rank = -int(square[1])
+        file = FILE.index(square[0])
+        piece = self.grid[rank][file]
+        if piece != 0:
+            piece.location = 'j0'
+            self.grid[rank][file] = 0
