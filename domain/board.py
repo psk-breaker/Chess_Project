@@ -29,3 +29,30 @@ class Board:
         if piece != 0:
             piece.location = 'j0'
             self.grid[rank][file] = 0
+    
+    def move_piece(self, piece, target):
+        rank = -int(target[1])
+        file = FILE.index(target[0])
+        if self.occupied_square(target) == 0:
+            self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+            piece.move(target)
+            self.grid[rank][file] = piece
+    
+        elif self.occupied_square(target) == piece.colour:
+            raise ValueError(f"Can't take own pieces")
+        
+        elif self.occupied_square(target) != piece.colour:
+            if piece.capture_rule(target):
+                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+                self.remove_piece(target)
+                piece.move(target)
+
+    def occupied_square(self, target):
+        rank = -int(target[1])
+        file = FILE.index(target[0])
+        piece = self.grid[rank][file]
+        if piece != 0:
+            return piece.colour
+        elif piece == 0:
+            return piece
+    
