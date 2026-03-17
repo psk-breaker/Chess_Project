@@ -1,3 +1,6 @@
+FILE = 'abcdefgh'
+
+
 class Piece:
 
     def __init__(self, colour, piece_type, life, location):
@@ -87,7 +90,10 @@ class Pawn(Piece):
         if rank_check <= 0:
             raise ValueError(f'Try moving forward')
         if file_check == False:
-            raise ValueError(f'Crossing files without permission')
+            if self.capture_rule(target):
+                return True
+            else:
+                raise ValueError(f'Crossing files without permission')
 
     def starting_move_check(self, target):
         if len(self.move_history) == 1:
@@ -98,4 +104,22 @@ class Pawn(Piece):
     def move(self, target):
         if self.legal_move_check(target):
             super().move(target)
-            self.location = target
+    
+    def capture_rule(self, target):
+        target_rank = int(target[1])
+        target_file = FILE.index(target[0])
+        piece_rank = int(self.location[1])
+        piece_file = FILE.index(self.location[0])
+
+        if self.colour == 'white':
+            if (target_rank - piece_rank) == 1:
+                if abs(target_file - piece_file) == 1:
+                    return True
+            else:
+                raise ValueError(f'Capture not possible: {target_rank} {piece_rank}')
+        elif self.colour == 'black':
+            if (target_rank - piece_rank) == -1:
+                if abs(target_file - piece_file) == 1:
+                    return True
+            else:
+                raise ValueError(f'Capture not possible')
