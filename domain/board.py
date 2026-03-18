@@ -11,7 +11,23 @@ class Board:
                 rank.append(square)
             self.grid.append(rank)
             rank = []
-    
+
+    def print_pretty_board(self):
+        nice_board = []
+        row = []
+        for rank in self.grid:
+            row = []
+            for square in rank:
+                if square == 0:
+                    row.append('00')
+                else:
+                    notation = f'{square.colour[0]}{square.piece_type[0]}'
+                    row.append(notation)
+            nice_board.append(row)
+        
+        for rank in nice_board:
+            print(rank)
+            
     def place_piece(self, piece):
         rank = -int(piece.location[1])
         file = FILE.index(piece.location[0])
@@ -55,4 +71,6 @@ class Board:
             return piece.colour
         elif piece == 0:
             return piece
+    
+
     
