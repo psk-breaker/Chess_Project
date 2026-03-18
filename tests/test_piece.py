@@ -60,13 +60,15 @@ def test_pawn_move_rules():
     with pytest.raises(ValueError):
         b.move_piece(p, 'e5')
     
-
-    # Diagonal capture only
+    # Diagonal capture only - White
     enemy = Pawn('black', 'active', 'f5')
+    b.place_piece(enemy)
     b.move_piece(p, 'f5')
-    enemy = Pawn('black', 'active', 'g7')
-    b.move_piece(enemy, 'g6')
+    # Diagonal capture only - Black
+    enemy = Pawn('black', 'active', 'g6')
+    b.place_piece(enemy)
     b.move_piece(enemy, 'f5')
+    assert b.get_piece('f5') == enemy
     # No pinned movement
     # Enpassant
     # Promotion => New piece instance with duplicated attribute info
