@@ -1,6 +1,6 @@
 import pytest
 from domain.piece import Piece, King, Queen, Bishop, Knight, Rook, Pawn
-from tests.test_board import Board
+from domain.board import Board
 
 
 def test_piece_initialisation():
