@@ -1,9 +1,11 @@
 from domain.board import Board
 from domain.piece import Pawn
 
+TURN = ['BLANK', 'white', 'black']
 class Game:
     def __init__(self):
-        self.turn = 'white'
+        self.turn_counter = 1
+        self.turn = TURN[self.turn_counter]
         self.board = Board()
         
     def pawn_game_creation(self):
@@ -19,3 +21,21 @@ class Game:
         self.board.place_piece(self.bp1)
         self.board.place_piece(self.bp2)
         self.board.place_piece(self.bp3)
+    
+    def move_piece(self, piece, target):
+        if self.turn_check(piece):
+            self.board.move_piece(piece, target)
+            self.turn_swap()
+        elif self.turn_check(piece) == False:
+            raise ValueError(f"Not your turn {piece.colour}, it's {self.turn}'s turn")
+    
+    def turn_check(self, piece):
+        if self.turn == piece.colour:
+            return True
+        else:
+            return False
+    
+    def turn_swap(self):
+        self.turn_counter *= -1
+        self.turn = TURN[self.turn_counter]
+    
