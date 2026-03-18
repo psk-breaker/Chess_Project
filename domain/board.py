@@ -27,7 +27,7 @@ class Board:
         
         for rank in nice_board:
             print(rank)
-            
+
     def place_piece(self, piece):
         rank = -int(piece.location[1])
         file = FILE.index(piece.location[0])
@@ -59,9 +59,10 @@ class Board:
         
         elif self.occupied_square(target) != piece.colour:
             if piece.capture_rule(target):
-                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
                 self.remove_piece(target)
+                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
                 piece.move(target)
+                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
 
     def occupied_square(self, target):
         rank = -int(target[1])
