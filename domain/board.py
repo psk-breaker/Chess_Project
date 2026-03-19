@@ -12,19 +12,22 @@ class Board:
             self.grid.append(rank)
             rank = []
 
-    def print_pretty_board(self):
+    def list_board(self):
         nice_board = []
         row = []
         for rank in self.grid:
             row = []
             for square in rank:
                 if square == 0:
-                    row.append('00')
+                    row.append('')
                 else:
                     notation = f'{square.colour[0]}{square.piece_type[0]}'
                     row.append(notation)
             nice_board.append(row)
-        
+        return nice_board
+
+    def print_pretty_board(self):
+        nice_board = self.list_board()
         for rank in nice_board:
             print(rank)
 
