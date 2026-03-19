@@ -29,6 +29,11 @@ class Game:
         elif self.turn_check(piece) == False:
             raise ValueError(f"Not your turn {piece.colour}, it's {self.turn}'s turn")
     
+    def make_move(self, start, end):
+        piece = self.board.get_piece(str(start))
+        target = str(end)
+        self.move_piece(piece, target)
+    
     def turn_check(self, piece):
         if self.turn == piece.colour:
             return True
