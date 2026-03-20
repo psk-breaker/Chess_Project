@@ -52,15 +52,16 @@ class Board:
     def move_piece(self, piece, target):
         rank = -int(target[1])
         file = FILE.index(target[0])
-        if self.occupied_square(target) == 0:
+        occupancy = self.occupied_square(target)
+        if occupancy == 0 and piece.legal_move_check(target, occupancy):
             self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
             piece.move(target)
             self.grid[rank][file] = piece
     
-        elif self.occupied_square(target) == piece.colour:
+        elif occupancy == piece.colour:
             raise ValueError(f"Can't take own pieces")
-        
-        elif self.occupied_square(target) != piece.colour:
+
+        elif occupancy != piece.colour:
             if piece.capture_rule(target):
                 self.remove_piece(target)
                 self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
@@ -74,7 +75,9 @@ class Board:
         if piece != 0:
             return piece.colour
         elif piece == 0:
-            return piece
+            return 0
+    
+
     
 
     

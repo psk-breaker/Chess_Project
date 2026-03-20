@@ -1,3 +1,9 @@
+PIECES = {
+    '': '', 'wp': "♙", 'bp':"♟",
+};
+let selected = null;
+
+
 async function fetchBoard() {
     const res = await fetch('/board');
     const board = await res.json();
@@ -14,9 +20,20 @@ function renderBoard(board) {
 
         row.forEach((cell, j) => {
             const square = document.createElement('div');
-            square.className = 'square';
-            square.innerText = cell || '';
-            square.onclick = () => handleClick(i, j);
+            square.classList.add("square");
+            const isLight = (i + j) % 2 === 0;
+
+            if (isLight) {
+                square.classList.add("light");
+            } else {
+                square.classList.add("dark");
+            }
+
+            square.innerText = PIECES[cell] || '';
+            square.onclick = () => {
+                handleClick(i, j);
+                square.classList.add("selected");
+            }
 
             rowDiv.appendChild(square);
         });
@@ -31,7 +48,7 @@ function toChessNotation(i, j) {
     return file + rank;
 }
 
-let selected = null;
+
 
 async function handleClick(i, j) {
     if (!selected) {

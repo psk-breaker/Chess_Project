@@ -25,7 +25,8 @@ class Game:
     def move_piece(self, piece, target):
         if self.turn_check(piece):
             self.board.move_piece(piece, target)
-            self.turn_swap()
+            if piece.location == target:
+                self.turn_swap()
         elif self.turn_check(piece) == False:
             raise ValueError(f"Not your turn {piece.colour}, it's {self.turn}'s turn")
     

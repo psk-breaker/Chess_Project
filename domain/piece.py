@@ -68,7 +68,7 @@ class Pawn(Piece):
     def __str__(self):
         return super().__str__()
     
-    def legal_move_check(self, target):
+    def legal_move_check(self, target, occupancy):
         rank_check = 0
         if self.colour == 'white':
             rank_check = int(target[1]) - int(self.location[1])
@@ -90,10 +90,10 @@ class Pawn(Piece):
         if rank_check <= 0:
             raise ValueError(f'Try moving forward')
         if file_check == False:
-            if self.capture_rule(target):
+            if self.capture_rule(target) and occupancy != 0:
                 return True
             else:
-                raise ValueError(f'Crossing files without permission')
+                raise ValueError(f'illegal move')
 
     def starting_move_check(self, target):
         if len(self.move_history) == 1:
@@ -102,8 +102,7 @@ class Pawn(Piece):
             raise ValueError(f'Only possible on first move')
     
     def move(self, target):
-        if self.legal_move_check(target):
-            super().move(target)
+        super().move(target)
     
     def capture_rule(self, target):
         target_rank = int(target[1])

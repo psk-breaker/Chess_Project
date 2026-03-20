@@ -37,19 +37,24 @@ def test_pawn_move_rules():
     p = Pawn('white', 'active', 'e2')
     # No triple square movement
     with pytest.raises(ValueError):
+        p.legal_move_check('e5', 0)
         p.move('e5')
     # Double square movement at start
     p.move('e4')
     # Only double square movement at start
     with pytest.raises(ValueError):
+        p.legal_move_check('e6', 0)
         p.move('e6')
     
     # No lateral or backwards movements
     with pytest.raises(ValueError):
+        p.legal_move_check('e4', 0)
         p.move('f4')
     with pytest.raises(ValueError):
+        p.legal_move_check('f3', 0)
         p.move('f3')
     with pytest.raises(ValueError):
+        p.legal_move_check('e3', 0)
         p.move('e3')
 
     # No movement onto occupied squares
