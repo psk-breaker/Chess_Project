@@ -78,15 +78,15 @@ class Pawn(Piece):
         file_check = True if self.location[0] == target[0] else False
 
         if rank_check == 1:
-            if file_check:
+            if file_check and occupancy == 0:
                 # Just permitting a 1 rank move within file
                 return True
-        if rank_check == 2 and file_check:
+        if rank_check == 2 and file_check and occupancy == 0:
             if self.starting_move_check(target):
                 # Just permitting a double rank move for first move
                 return True
         if rank_check >= 3:
-            raise ValueError(f'Too many ranks crossed')
+            raise ValueError(f'Too many ranks crossed: {rank_check}')
         if rank_check <= 0:
             raise ValueError(f'Try moving forward')
         if file_check == False:
