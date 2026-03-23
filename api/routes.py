@@ -28,4 +28,15 @@ def make_move():
         return jsonify({'status': 'ok'})
     except ValueError as e:
         return jsonify({"status": "error", "message": str(e)})
-    
+
+
+@api.route('/legal', methods=['POST'])
+def available_moves():
+    data = request.json
+    selected_square = data['sq']
+    selected_square = str(selected_square)
+    print(selected_square)
+    piece = game.board.get_piece(selected_square)
+    ans = game.board.available_moves(piece)
+    print(ans)
+    return jsonify(ans)
