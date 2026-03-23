@@ -76,8 +76,27 @@ class Board:
             return piece.colour
         elif piece == 0:
             return 0
-    
 
-    
-
+    def available_moves(self, piece):
+        if piece == 0:
+            return
+        available = []
+        rank = 8
+        for row in self.grid:
+            j = -1
+            for square in row:
+                j += 1
+                occupancy = square.colour if square != 0 else 0
+                file =  FILE[j]
+                target = file + str(rank)
+                legal = False
+                try:
+                    legal = piece.legal_move_check(target, occupancy)
+                except ValueError:
+                    print(f"Testing: {target} isn't an available square")
+                if legal and occupancy != piece.colour:
+                    available.append(target)
+            rank -= 1
+        print(f'Available squares to move to: {available}')    
+        return available
     
