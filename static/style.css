@@ -32,3 +32,4 @@ body {
 .square.light { background: #f0d9b5; }
 .square.dark  { background: #b58863; }
 .square.selected { background: #a3f6fc !important; }
+.square.available { background: #5cf389 !important; }
