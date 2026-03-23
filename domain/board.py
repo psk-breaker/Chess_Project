@@ -1,4 +1,5 @@
 FILE = 'abcdefgh'
+RANK = '12345678'
 
 class Board:
 
@@ -53,7 +54,8 @@ class Board:
         rank = -int(target[1])
         file = FILE.index(target[0])
         occupancy = self.occupied_square(target)
-        if occupancy == 0 and piece.legal_move_check(target, occupancy):
+        available = self.available_moves(piece)
+        if occupancy == 0 and piece.legal_move_check(target, occupancy) and target in available:
             self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
             piece.move(target)
             self.grid[rank][file] = piece
@@ -97,6 +99,147 @@ class Board:
                 if legal and occupancy != piece.colour:
                     available.append(target)
             rank -= 1
-        print(f'Available squares to move to: {available}')    
-        return available
+        
+        print(f'Available squares to move to: {available}')
+        unblocked_squares = self.blocked_check(piece)
+        print(f'The unblocked squares are: {unblocked_squares}')  
+
+        true_available_squares = []  
+        for square in available:
+            if square in unblocked_squares:
+                true_available_squares.append(square)
+            
+        return true_available_squares
     
+
+    def blocked_check(self, piece):
+        unblocked_squares = []
+        
+        for rank in range(int(piece.location[1]) +1, 8):
+            check_square = piece.location[0] + str(rank)
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+        
+        for rank in range(int(piece.location[1]) -1, 0, -1):
+            check_square = piece.location[0] + str(rank)
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+        
+        for file_index in range((FILE.index(piece.location[0]) -1), 0, -1):
+            check_square = FILE[file_index] + piece.location[1]
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+            
+        for file_index in range((FILE.index(piece.location[0]) +1), 8):
+            check_square = FILE[file_index] + piece.location[1]
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+
+        #diagonals check
+
+        for i in range(int(piece.location[1]) -1, 0, -1):
+            rank = str(i)
+            i = int(piece.location[1]) - i
+            try:
+                file =  FILE[FILE.index(piece.location[0]) +i]
+            except IndexError:
+                print(f'Outside of board: {i} and {rank}')
+                break
+            check_square = file + rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+              
+        for i in range(int(piece.location[1]) -1, 0, -1):
+            rank = str(i)
+            i = int(piece.location[1]) - i
+            try:
+                file =  FILE[FILE.index(piece.location[0]) -i]
+            except IndexError:
+                print(f'Outside of board: {i} and {rank}')
+                break
+            check_square = file + rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+        
+        # diagonal down
+        for i in range(int(piece.location[1]) +1, 8):
+            rank = str(i)
+            i = i - int(piece.location[1])
+            try:
+                file =  FILE[FILE.index(piece.location[0]) +i]
+            except IndexError:
+                print(f'Outside of board: {i} and {rank}')
+                break
+            check_square = file + rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+        
+        for i in range(int(piece.location[1]) +1, 8):
+            rank = str(i)
+            i = i - int(piece.location[1])
+            try:
+                file =  FILE[FILE.index(piece.location[0]) -i]
+            except IndexError:
+                print(f'Outside of board: {i} and {rank}')
+                break
+            check_square = file + rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == piece.colour:
+                    break
+                elif check.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    break
+            elif check == 0:
+                unblocked_squares.append(check_square)
+
+        return unblocked_squares
