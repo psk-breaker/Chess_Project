@@ -4,7 +4,7 @@ from domain.game import Game
 api = Blueprint('api', __name__)
 
 game = Game()
-game.pawn_game_creation()
+game.queen_game_creation()
 
 @api.route('/')
 def index():
@@ -38,5 +38,4 @@ def available_moves():
     print(selected_square)
     piece = game.board.get_piece(selected_square)
     ans = game.board.available_moves(piece)
-    print(ans)
     return jsonify(ans)
