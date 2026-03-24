@@ -36,6 +36,29 @@ class Queen(Piece):
     def __str__(self):
         return super().__str__()
 
+    def legal_move_check(self, target, occupancy):
+        # Occupancy irrelevant
+        rank_check = abs(int(target[1]) - int(self.location[1]))
+        file_check = abs(FILE.index(target[0]) - FILE.index(self.location[0]))
+        diagonal_check = file_check - rank_check
+        
+        # legal check for movement within same rank and file
+        if rank_check == 0 or file_check == 0:
+            return True
+        # if not within same rank or file, diagonal check necessary
+        if diagonal_check == 0:
+            return True
+        
+        return False
+        
+    
+    def move(self, target):
+        super().move(target)
+    
+    def capture_rule(self, target):
+        # Queen has no exclusive capture rule
+        return True
+
 
 class Bishop(Piece):
     def __init__(self, colour, life, location):
