@@ -55,25 +55,27 @@ class Board:
         file = FILE.index(target[0])
         occupancy = self.occupied_square(target)
         available = self.available_moves(piece)
-        if occupancy == 0 and piece.legal_move_check(target, occupancy) and target in available:
-            self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
-            piece.move(target)
-            self.grid[rank][file] = piece
-    
-        elif occupancy == piece.colour:
-            raise ValueError(f"Can't take own pieces")
-
-        elif occupancy != piece.colour:
-            if piece.capture_rule(target):
-                self.remove_piece(target)
+        
+        if occupancy == piece.colour:
+           raise ValueError(f"Can't take own pieces") 
+        
+        elif piece.legal_move_check(target, occupancy) and target in available:
+            if occupancy == 0:
+                print(f'You just made the move {piece.location} to {target}')
                 self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
                 piece.move(target)
-                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
+                self.grid[rank][file] = piece  
+    
+            elif occupancy != piece.colour:
+                if piece.capture_rule(target):
+                    print(f'You just captured from {piece.location} to {target}')
+                    self.remove_piece(target)
+                    self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+                    piece.move(target)
+                    self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece             
 
     def occupied_square(self, target):
-        rank = -int(target[1])
-        file = FILE.index(target[0])
-        piece = self.grid[rank][file]
+        piece = self.get_piece(target)
         if piece != 0:
             return piece.colour
         elif piece == 0:
@@ -95,27 +97,27 @@ class Board:
                 try:
                     legal = piece.legal_move_check(target, occupancy)
                 except ValueError:
-                    print(f"Testing: {target} isn't an available square")
+                    pass
                 if legal and occupancy != piece.colour:
                     available.append(target)
             rank -= 1
         
-        print(f'Available squares to move to: {available}')
-        unblocked_squares = self.blocked_check(piece)
-        print(f'The unblocked squares are: {unblocked_squares}')  
+        unblocked_squares = self.blocked_check(piece) 
 
         true_available_squares = []  
         for square in available:
             if square in unblocked_squares:
                 true_available_squares.append(square)
-            
+        print(f'Available squares to move to: {true_available_squares}')    
+        
         return true_available_squares
     
 
     def blocked_check(self, piece):
         unblocked_squares = []
-        
-        for rank in range(int(piece.location[1]) +1, 8):
+        quit = False
+
+        for rank in range(int(piece.location[1]) +1, 9):
             check_square = piece.location[0] + str(rank)
             check = self.get_piece(check_square)
             if check != 0:
@@ -139,7 +141,7 @@ class Board:
             elif check == 0:
                 unblocked_squares.append(check_square)
         
-        for file_index in range((FILE.index(piece.location[0]) -1), 0, -1):
+        for file_index in range((FILE.index(piece.location[0]) -1), -1, -1):
             check_square = FILE[file_index] + piece.location[1]
             check = self.get_piece(check_square)
             if check != 0:
@@ -165,13 +167,13 @@ class Board:
 
         #diagonals check
 
-        for i in range(int(piece.location[1]) -1, 0, -1):
+        for i in range(int(piece.location[1]) -1, 1, -1):
             rank = str(i)
             i = int(piece.location[1]) - i
+            print(f'i is {i}')
             try:
                 file =  FILE[FILE.index(piece.location[0]) +i]
             except IndexError:
-                print(f'Outside of board: {i} and {rank}')
                 break
             check_square = file + rank
             check = self.get_piece(check_square)
@@ -184,7 +186,7 @@ class Board:
             elif check == 0:
                 unblocked_squares.append(check_square)
               
-        for i in range(int(piece.location[1]) -1, 0, -1):
+        for i in range(int(piece.location[1]) -1, 1, -1):
             rank = str(i)
             i = int(piece.location[1]) - i
             try:
@@ -203,8 +205,8 @@ class Board:
             elif check == 0:
                 unblocked_squares.append(check_square)
         
-        # diagonal down
-        for i in range(int(piece.location[1]) +1, 8):
+        # diagonal up
+        for i in range(int(piece.location[1]) +1, 9):
             rank = str(i)
             i = i - int(piece.location[1])
             try:
@@ -216,6 +218,7 @@ class Board:
             check = self.get_piece(check_square)
             if check != 0:
                 if check.colour == piece.colour:
+                    print(f'h8 check {check} on {check_square}')
                     break
                 elif check.colour != piece.colour:
                     unblocked_squares.append(check_square)
@@ -242,4 +245,5 @@ class Board:
             elif check == 0:
                 unblocked_squares.append(check_square)
 
+        print(unblocked_squares)
         return unblocked_squares
