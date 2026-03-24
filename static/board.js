@@ -1,5 +1,7 @@
 PIECES = {
     '': '', 'wp': "♙", 'bp':"♟",
+    'wn': "♘", 'bn': "♞",
+    'wq': "♕", 'bq': "♛",
 };
 FILE = 'abcdefgh';
 let selected = null;
