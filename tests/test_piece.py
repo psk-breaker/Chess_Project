@@ -77,3 +77,22 @@ def test_pawn_move_rules():
     # No pinned movement
     # Enpassant
     # Promotion => New piece instance with duplicated attribute info
+
+
+# =======================================
+
+def test_bishop_legal_move_check():
+    b = Bishop("white", "active", "d4")
+    with pytest.raises(ValueError):
+        b.legal_move_check('d2')
+        b.move
+    with pytest.raises(ValueError):
+        b.legal_move_check('d5')
+    with pytest.raises(ValueError):
+        b.legal_move_check('c4')
+    with pytest.raises(ValueError):
+        b.legal_move_check('e4')
+    with pytest.raises(ValueError):
+        b.legal_move_check('e6')
+
+    
