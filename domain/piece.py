@@ -66,14 +66,56 @@ class Bishop(Piece):
     
     def __str__(self):
         return super().__str__()
+    
+    def legal_move_check(self, target, occupancy=0):
+        # Occupancy irrelevant
+        rank_check = abs(int(target[1]) - int(self.location[1]))
+        file_check = abs(FILE.index(target[0]) - FILE.index(self.location[0]))
+        diagonal_check = file_check - rank_check
+        
+        # Only a diagonal move is possible for a bishop
+        if diagonal_check == 0:
+            return True
+        elif diagonal_check != 0:
+            raise ValueError(f'Bishop can not move outside diagonals')
+        
+        return False
+    
+    def move(self, target):
+        super().move(target)
+    
+    def capture_rule(self, target):
+        # Queen has no exclusive capture rule
+        return True
 
 
 class Knight(Piece):
     def __init__(self, colour, life, location):
-        super().__init__(colour=colour, piece_type='knight', life=life, location=location)
+        super().__init__(colour=colour, piece_type='night', life=life, location=location)
     
     def __str__(self):
         return super().__str__()
+    
+    def legal_move_check(self, target, occupancy=0):
+        # Occupancy irrelevant
+        file_check = abs(FILE.index(target[0]) - FILE.index(self.location[0]))
+        rank_check = abs(int(target[1]) - int(self.location[1]))
+        
+        # vertical L move
+        if file_check == 1 and rank_check == 2:
+            return True
+        # horizontal L move check
+        elif file_check == 2 and rank_check == 1:
+            return True
+        else:
+            raise ValueError(f'Knight can not move outside of Ls')
+    
+    def move(self, target):
+        super().move(target)
+    
+    def capture_rule(self, target):
+        # Knight has no exclusive capture rule
+        return True
     
 
 class Rook(Piece):
@@ -92,6 +134,7 @@ class Pawn(Piece):
         return super().__str__()
     
     def legal_move_check(self, target, occupancy):
+        # occupancy is a redundant feature with blocked_check
         rank_check = 0
         if self.colour == 'white':
             rank_check = int(target[1]) - int(self.location[1])
