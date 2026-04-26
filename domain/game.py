@@ -1,5 +1,5 @@
 from domain.board import Board
-from domain.piece import Pawn, Knight, Bishop, Queen
+from domain.piece import Pawn, Rook, Knight, Bishop, Queen, King
 
 TURN = ['BLANK', 'white', 'black']
 class Game:
@@ -16,13 +16,16 @@ class Game:
         self.wp7 = Pawn('white', 'active', 'g2')
         self.wp8 = Pawn('white', 'active', 'h2')
 
-        
         self.bp1 = Pawn('black', 'active', 'a7')
         self.bp2 = Pawn('black', 'active', 'b7')
         self.bp3 = Pawn('black', 'active', 'c7')
         self.bp6 = Pawn('black', 'active', 'f7')
         self.bp7 = Pawn('black', 'active', 'g7')
         self.bp8 = Pawn('black', 'active', 'h7')
+
+        self.wk = King('white', 'active', 'e1')
+        self.bk = King('black', 'active', 'e8')
+
         self.board.place_piece(self.wp1)
         self.board.place_piece(self.wp2)
         self.board.place_piece(self.wp3)
@@ -35,6 +38,9 @@ class Game:
         self.board.place_piece(self.bp6)
         self.board.place_piece(self.bp7)
         self.board.place_piece(self.bp8)
+
+        self.board.place_piece(self.wk)
+        self.board.place_piece(self.bk)
     
     def queen_game_creation(self):
         
@@ -64,12 +70,24 @@ class Game:
         self.board.place_piece(self.wn2)
         self.board.place_piece(self.bn1)
         self.board.place_piece(self.bn2)
+    
+    def rook_game_creation(self):
+        self.wr1 = Rook('white', 'active', 'a1')
+        self.wr2 = Rook('white', 'active', 'h1')
+        self.br1 = Rook('black', 'active', 'a8')
+        self.br2 = Rook('black', 'active', 'h8')
+
+        self.board.place_piece(self.wr1)
+        self.board.place_piece(self.wr2)
+        self.board.place_piece(self.br1)
+        self.board.place_piece(self.br2)
 
     def test_game_creation(self):
         self.pawn_game_creation()
         self.queen_game_creation()
         self.bishop_game_creation()
         self.knight_game_creation()
+        self.rook_game_creation()
 
     
     def move_piece(self, piece, target):
