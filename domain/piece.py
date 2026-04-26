@@ -27,6 +27,31 @@ class King(Piece):
     
     def __str__(self):
         return super().__str__()
+    
+    def legal_move_check(self, target, occupancy=0):
+        # Occupancy irrelevant
+        rank_check = abs(int(target[1]) - int(self.location[1]))
+        file_check = abs(FILE.index(target[0]) - FILE.index(self.location[0]))
+        
+        # legal check for cardinal movement
+        if rank_check == 1 and file_check == 0:
+            return True
+        elif rank_check == 0 and file_check == 1:
+            return True
+        
+        # legal check for ordinal directions
+        elif rank_check == 1 and file_check == 1:
+            return True
+        # if not within same rank or file, illegal move
+        else:
+            raise ValueError(f'King can not move to {target}')
+    
+    def move(self, target):
+        super().move(target)
+    
+    def capture_rule(self, target):
+        # King has no exclusive capture rule
+        return True
 
 
 class Queen(Piece):
@@ -85,7 +110,7 @@ class Bishop(Piece):
         super().move(target)
     
     def capture_rule(self, target):
-        # Queen has no exclusive capture rule
+        # Bishop has no exclusive capture rule
         return True
 
 
@@ -124,6 +149,25 @@ class Rook(Piece):
     
     def __str__(self):
         return super().__str__()
+    
+    def legal_move_check(self, target, occupancy=0):
+        # Occupancy irrelevant
+        rank_check = abs(int(target[1]) - int(self.location[1]))
+        file_check = abs(FILE.index(target[0]) - FILE.index(self.location[0]))
+        
+        # legal check for movement within same rank and file
+        if rank_check == 0 or file_check == 0:
+            return True
+        # if not within same rank or file, illegal move
+        else:
+            raise ValueError(f'Rook can not move to {target}')
+    
+    def move(self, target):
+        super().move(target)
+    
+    def capture_rule(self, target):
+        # Rook has no exclusive capture rule
+        return True
 
 
 class Pawn(Piece):
