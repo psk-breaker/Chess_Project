@@ -115,18 +115,119 @@ class Board:
     
     def blocked_check(self, piece):
         unblocked_squares = []
-        quit = False
 
+        if piece.piece_type == 'pawn':
+            result = self.unblocked_pawn_moves(piece)
+            for square in result:
+                unblocked_squares.append(square)
+            print(unblocked_squares)
+            return unblocked_squares
         if piece.piece_type == 'night':
             result = self.unblocked_knight_moves(piece)
             for square in result:
                 unblocked_squares.append(square)
-        
+            return unblocked_squares
         if piece.piece_type == 'king':
             result = self.unblocked_king_moves(piece)
             for square in result:
                 unblocked_squares.append(square)
+            return unblocked_squares
+        if piece.piece_type == 'queen' or piece.piece_type == 'rook':
+            result = self.unblocked_cardinal_moves(piece)
+            for square in result:
+                unblocked_squares.append(square)
+
+        if piece.piece_type == 'queen' or piece.piece_type == 'bishop':
+            result = self.unblocked_ordinal_moves(piece)
+            for square in result:
+                unblocked_squares.append(square)
+
+        print(unblocked_squares)
+        return unblocked_squares
+    
+    def check_square_result(self, piece, check_square):
+        check_square_result = self.get_piece(check_square)
+        if check_square_result != 0:
+            if check_square_result.colour == piece.colour:
+                return None
+            elif check_square_result.colour != piece.colour:
+                return check_square
+        elif check_square_result == 0:
+            return check_square
+
+    def unblocked_pawn_moves(self, piece):
+        unblocked_squares = []
+        file = FILE.index(piece.location[0])
+        rank = int(piece.location[1])
+
+        # up
+        if piece.colour == 'white':
+            for i in range(2):
+                rank += 1
+                check_square = FILE[file] + str(rank)
+                print(f'check this square: {check_square}')
+                try:
+                    check_square_result = self.check_square_result(piece, check_square)
+                    if check_square_result != None:
+                        unblocked_squares.append(check_square_result)
+                except:
+                    pass
+            # capture
+            file = FILE.index(piece.location[0])
+            rank = int(piece.location[1])
+            # left
+            if file >= 1:
+                rank += 1
+                check_square = FILE[file - 1] + str(rank)
+                print(f'check this square: {check_square}')
+                check_square_result = self.check_square_result(piece, check_square)
+                if check_square_result != None:
+                    unblocked_squares.append(check_square_result)
+            file = FILE.index(piece.location[0])
+            rank = int(piece.location[1])
+            # right
+            if file <= 6:
+                rank += 1
+                check_square = FILE[file + 1] + str(rank)
+                check_square_result = self.check_square_result(piece, check_square)
+                if check_square_result != None:
+                    unblocked_squares.append(check_square_result)
+
+        # down
+        elif piece.colour == 'black':
+            for i in range(2):
+                rank -= 1
+                check_square = FILE[file] + str(rank)
+                print(f'check this square: {check_square}')
+                check_square_result = self.check_square_result(piece, check_square)
+                if check_square_result != None:
+                    unblocked_squares.append(check_square_result)
+            
+            # capture
+            file = FILE.index(piece.location[0])
+            rank = int(piece.location[1])
+            # left
+            if file >= 1 and rank >= 2:
+                rank -= 1
+                check_square = FILE[file - 1] + str(rank)
+                check_square_result = self.check_square_result(piece, check_square)
+                if check_square_result != None:
+                    unblocked_squares.append(check_square_result)
+            
+            file = FILE.index(piece.location[0])
+            rank = int(piece.location[1])
+            # right
+            if file <= 6 and rank >= 2:
+                rank -= 1
+                check_square = FILE[file + 1] + str(rank)
+                check_square_result = self.check_square_result(piece, check_square)
+                if check_square_result != None:
+                    unblocked_squares.append(check_square_result)
         
+        return unblocked_squares
+
+    def unblocked_cardinal_moves(self, piece):
+        unblocked_squares = []
         # Up
         for rank in range(int(piece.location[1]) +1, 9):
             check_square = piece.location[0] + str(rank)
@@ -178,6 +279,11 @@ class Board:
                     break
             elif check == 0:
                 unblocked_squares.append(check_square)
+        
+        return unblocked_squares
+    
+    def unblocked_ordinal_moves(self, piece):
+        unblocked_squares = []
 
         #diagonals check
         # bottom right
@@ -280,10 +386,8 @@ class Board:
             i -= 1
             j += 1
         
-
-        print(unblocked_squares)
         return unblocked_squares
-    
+
     def unblocked_knight_moves(self, piece):
         unblocked_squares = []
         # knight moves
@@ -510,5 +614,7 @@ class Board:
 
         return unblocked_squares
 
+    def threat_detection(self, king):
+        points_of_attack = []
 
 # end
