@@ -117,6 +117,16 @@ class Board:
         unblocked_squares = []
         quit = False
 
+        if piece.piece_type == 'night':
+            result = self.unblocked_knight_moves(piece)
+            for square in result:
+                unblocked_squares.append(square)
+        
+        if piece.piece_type == 'king':
+            result = self.unblocked_king_moves(piece)
+            for square in result:
+                unblocked_squares.append(square)
+        
         # Up
         for rank in range(int(piece.location[1]) +1, 9):
             check_square = piece.location[0] + str(rank)
@@ -270,11 +280,6 @@ class Board:
             i -= 1
             j += 1
         
-        if piece.piece_type == 'night':
-            result = self.unblocked_knight_moves(piece)
-            for square in result:
-                unblocked_squares.append(square)
-        
 
         print(unblocked_squares)
         return unblocked_squares
@@ -372,3 +377,138 @@ class Board:
         elif check_square_result == 0:
             unblocked_squares.append(check_square)
         return unblocked_squares
+    
+    def unblocked_king_moves(self, piece):
+        unblocked_squares = []
+        file = FILE.index(piece.location[0])
+        rank = int(piece.location[1])
+
+        # up
+        if rank <= 7:
+            target_file = FILE[file]
+            target_rank = str(rank + 1)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+        
+        # down
+        if rank >= 2:
+            target_file = FILE[file]
+            target_rank = str(rank - 1)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+        
+        # left
+        if file >= 1:
+            target_file = FILE[file - 1]
+            target_rank = str(rank)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+
+        # right   
+        if file <= 6:
+            target_file = FILE[file + 1]
+            target_rank = str(rank)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+        
+        # diags
+        # top left
+        if file >= 1 and rank <= 7:
+            target_file = FILE[file - 1]
+            target_rank = str(rank + 1)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+        
+        # top right
+        if file <= 6 and rank <= 7:
+            target_file = FILE[file + 1]
+            target_rank = str(rank + 1)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+        
+        # bottom left
+        if file >= 1 and rank >= 2:
+            target_file = FILE[file - 1]
+            target_rank = str(rank - 1)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+        
+        # bottom right
+        if file <= 6 and rank >= 2:
+            target_file = FILE[file + 1]
+            target_rank = str(rank - 1)
+            check_square = target_file + target_rank
+            check_square_result = self.get_piece(check_square)
+            if check_square_result != 0:
+                if check_square_result.colour == piece.colour:
+                    pass
+                elif check_square_result.colour != piece.colour:
+                    unblocked_squares.append(check_square)
+                    pass
+            elif check_square_result == 0:
+                unblocked_squares.append(check_square)
+        
+        # castling left
+
+        #castling right
+
+        return unblocked_squares
+
+
+# end
