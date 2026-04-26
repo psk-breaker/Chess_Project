@@ -44,8 +44,8 @@ class Game:
     
     def queen_game_creation(self):
         
-        self.wq = Queen('white', 'active', 'e4')
-        self.bq = Queen('black', 'active', 'd4')
+        self.wq = Queen('white', 'active', 'd1')
+        self.bq = Queen('black', 'active', 'd8')
 
         self.board.place_piece(self.wq) 
         self.board.place_piece(self.bq)
@@ -62,9 +62,9 @@ class Game:
     
     def knight_game_creation(self):
         self.wn1 = Knight('white', 'active', 'b1')
-        self.wn2 = Knight('white', 'active', 'f1')
+        self.wn2 = Knight('white', 'active', 'g1')
         self.bn1 = Knight('black', 'active', 'b8')
-        self.bn2 = Knight('black', 'active', 'f8')
+        self.bn2 = Knight('black', 'active', 'g8')
 
         self.board.place_piece(self.wn1)
         self.board.place_piece(self.wn2)
@@ -89,7 +89,53 @@ class Game:
         self.knight_game_creation()
         self.rook_game_creation()
 
-    
+    def standard_game_creation(self):
+        self.wp1 = Pawn('white', 'active', 'a2')
+        self.wp2 = Pawn('white', 'active', 'b2')
+        self.wp3 = Pawn('white', 'active', 'c2')
+        self.wp4 = Pawn('white', 'active', 'd2')
+        self.wp5 = Pawn('white', 'active', 'e2')
+        self.wp6 = Pawn('white', 'active', 'f2')
+        self.wp7 = Pawn('white', 'active', 'g2')
+        self.wp8 = Pawn('white', 'active', 'h2')
+
+        self.bp1 = Pawn('black', 'active', 'a7')
+        self.bp2 = Pawn('black', 'active', 'b7')
+        self.bp3 = Pawn('black', 'active', 'c7')
+        self.bp4 = Pawn('black', 'active', 'd7')
+        self.bp5 = Pawn('black', 'active', 'e7')
+        self.bp6 = Pawn('black', 'active', 'f7')
+        self.bp7 = Pawn('black', 'active', 'g7')
+        self.bp8 = Pawn('black', 'active', 'h7')
+
+        self.wk = King('white', 'active', 'e1')
+        self.bk = King('black', 'active', 'e8')
+
+        self.board.place_piece(self.wp1)
+        self.board.place_piece(self.wp2)
+        self.board.place_piece(self.wp3)
+        self.board.place_piece(self.wp4)
+        self.board.place_piece(self.wp5)
+        self.board.place_piece(self.wp6)
+        self.board.place_piece(self.wp7)
+        self.board.place_piece(self.wp8)
+        self.board.place_piece(self.bp1)
+        self.board.place_piece(self.bp2)
+        self.board.place_piece(self.bp3)
+        self.board.place_piece(self.bp4)
+        self.board.place_piece(self.bp5)
+        self.board.place_piece(self.bp6)
+        self.board.place_piece(self.bp7)
+        self.board.place_piece(self.bp8)
+
+        self.board.place_piece(self.wk)
+        self.board.place_piece(self.bk)
+
+        self.queen_game_creation()
+        self.bishop_game_creation()
+        self.knight_game_creation()
+        self.rook_game_creation()
+
     def move_piece(self, piece, target):
         if self.turn_check(piece):
             self.board.move_piece(piece, target)
