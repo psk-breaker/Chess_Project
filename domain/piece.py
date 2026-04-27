@@ -8,6 +8,7 @@ class Piece:
         self.piece_type = piece_type
         self.life = life
         self.location = location
+        self.pinned = False
         self.move_history = []
         self.move_history.append(location)
 
