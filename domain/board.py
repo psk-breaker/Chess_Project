@@ -640,6 +640,8 @@ class Board:
                     if check.piece_type == 'queen' or check.piece_type == 'rook':
                         threat = True
                         break
+                    else:
+                        break
         if threat == True and len(nearest_pieces) == 0:
             result = True
         if threat== True and len(nearest_pieces) == 1:
@@ -662,6 +664,8 @@ class Board:
                     if check.piece_type == 'queen' or check.piece_type == 'rook':
                         threat = True
                         break
+                    else:
+                        break
         if threat == True and len(nearest_pieces) == 0:
             result = True
         if threat== True and len(nearest_pieces) == 1:
@@ -672,6 +676,8 @@ class Board:
 
         # left
         for file_index in range((FILE.index(square[0]) -1), -1, -1):
+            if len(nearest_pieces) == 2:
+                break
             check_square = FILE[file_index] + square[1]
             check = self.get_piece(check_square)
             if check != 0:
@@ -680,6 +686,8 @@ class Board:
                 elif check.colour != king.colour:
                     if check.piece_type == 'queen' or check.piece_type == 'rook':
                         threat = True
+                        break
+                    else:
                         break
         if threat == True and len(nearest_pieces) == 0:
             result = True
@@ -691,22 +699,157 @@ class Board:
 
         # right   
         for file_index in range((FILE.index(square[0]) +1), 8):
+            if len(nearest_pieces) == 2:
+                break
             check_square = FILE[file_index] + square[1]
             check = self.get_piece(check_square)
             if check != 0:
                 if check.colour == king.colour and check != king:
-                    break
+                    nearest_pieces.append(check)
                 elif check.colour != king.colour:
                     if check.piece_type == 'queen' or check.piece_type == 'rook':
                         threat = True
+                        break
+                    else:
                         break
         if threat == True and len(nearest_pieces) == 0:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
 
+        threat = False
+        nearest_pieces = []
+
         # ordinal check for queen and bishop
 
+        #diagonals check
+        # find threats coming from bottom right
+        i = FILE.index(square[0])
+        j = int(square[1])
+        while i < 7 and j > 1:
+            if len(nearest_pieces) == 2:
+                break
+            try:
+                check_file = FILE[i + 1]  
+            except:
+                print(f'Error blocked_check: bottom right')
+                break
+            check_rank = str(j - 1)
+            check_square = check_file + check_rank 
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    nearest_pieces.append(check)
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'bishop':
+                        threat = True
+                        break
+                    else:
+                        break
+            i += 1
+            j -= 1
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True 
+        threat = False
+        nearest_pieces = []
+
+        # threats coming from bottom left 
+        i = FILE.index(square[0])
+        j = int(square[1])
+        while i > 0 and j > 1:
+            if len(nearest_pieces) == 2:
+                break
+            try:
+                check_file = FILE[i - 1]  
+            except:
+                print(f'Error blocked_check: bottom left')
+                break
+            check_rank = str(j - 1)
+            check_square = check_file + check_rank 
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    nearest_pieces.append(check)
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'bishop':
+                        threat = True
+                        break
+                    else:
+                        break 
+            i -= 1
+            j -= 1
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True
+        threat = False
+        nearest_pieces = []
+
+        # threats from top right h8
+        i = FILE.index(square[0])
+        j = int(square[1])
+        while i < 7 and j < 8:
+            if len(nearest_pieces) == 2:
+                break
+            try:
+                check_file = FILE[i + 1]  
+            except:
+                print(f'Error blocked_check: top right')
+                break
+            check_rank = str(j + 1)
+            check_square = check_file + check_rank 
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    nearest_pieces.append(check)
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'bishop':
+                        threat = True
+                        break
+                    else:
+                        break 
+            i += 1
+            j += 1
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True
+        threat = False
+        nearest_pieces = []
+
+        # threats top left a8
+        i = FILE.index(square[0])
+        j = int(square[1])
+        while i > 0 and j < 8:
+            if len(nearest_pieces) == 2:
+                break
+            try:
+                check_file = FILE[i - 1]  
+            except:
+                print(f'Error blocked_check: top left')
+                break
+            check_rank = str(j + 1)
+            check_square = check_file + check_rank 
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    nearest_pieces.append(check)
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'bishop':
+                        threat = True
+                        break
+                    else:
+                        break  
+            i -= 1
+            j += 1
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True
+
+            
         # knight check
 
         # pawn check
