@@ -612,9 +612,107 @@ class Board:
 
         #castling right
 
-        return unblocked_squares
+        unblocked = []
+        for square in unblocked_squares:
+            result = self.threat_detection(piece, square)
+            if result == False:
+                unblocked.append(square)
+            elif result == True:
+                print(f'{square} is dangerous to move to')
+        return unblocked
 
-    def threat_detection(self, king):
-        points_of_attack = []
+    def threat_detection(self, king, square):
+        result = False
+        threat = False
+        nearest_pieces = []
 
+        # cardinal check for queen and rook
+        # Up
+        for rank in range(int(square[1]) +1, 9):
+            if len(nearest_pieces) == 2:
+                break
+            check_square = square[0] + str(rank)
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    nearest_pieces.append(check)
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'rook':
+                        threat = True
+                        break
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True
+            
+        
+        threat = False
+        nearest_pieces = []
+
+        # down
+        for rank in range(int(square[1]) -1, 0, -1):
+            if len(nearest_pieces) == 2:
+                break
+            check_square = square[0] + str(rank)
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    nearest_pieces.append(check)
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'rook':
+                        threat = True
+                        break
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True
+
+        threat = False
+        nearest_pieces = []
+
+        # left
+        for file_index in range((FILE.index(square[0]) -1), -1, -1):
+            check_square = FILE[file_index] + square[1]
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    nearest_pieces.append(check)
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'rook':
+                        threat = True
+                        break
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True
+
+        threat = False
+        nearest_pieces = []
+
+        # right   
+        for file_index in range((FILE.index(square[0]) +1), 8):
+            check_square = FILE[file_index] + square[1]
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour == king.colour and check != king:
+                    break
+                elif check.colour != king.colour:
+                    if check.piece_type == 'queen' or check.piece_type == 'rook':
+                        threat = True
+                        break
+        if threat == True and len(nearest_pieces) == 0:
+            result = True
+        if threat== True and len(nearest_pieces) == 1:
+            nearest_pieces[0].pinned = True
+
+        # ordinal check for queen and bishop
+
+        # knight check
+
+        # pawn check
+
+        # king check
+
+        return result
+        
 # end
