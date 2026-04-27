@@ -4,7 +4,7 @@ from domain.game import Game
 api = Blueprint('api', __name__)
 
 game = Game()
-game.standard_game_creation()
+game.test_game_creation()
 
 @api.route('/')
 def index():
