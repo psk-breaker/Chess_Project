@@ -7,7 +7,13 @@ class Game:
         self.turn_counter = 1
         self.turn = TURN[self.turn_counter]
         self.board = Board()
-        
+
+    def king_game_creation(self):
+        self.wk = King('white', 'active', 'e1')
+        self.bk = King('black', 'active', 'e8')
+        self.board.place_piece(self.wk)
+        self.board.place_piece(self.bk)
+
     def pawn_game_creation(self):
         self.wp1 = Pawn('white', 'active', 'a2')
         self.wp2 = Pawn('white', 'active', 'b2')
@@ -23,9 +29,6 @@ class Game:
         self.bp7 = Pawn('black', 'active', 'g7')
         self.bp8 = Pawn('black', 'active', 'h7')
 
-        self.wk = King('white', 'active', 'e1')
-        self.bk = King('black', 'active', 'e8')
-
         self.board.place_piece(self.wp1)
         self.board.place_piece(self.wp2)
         self.board.place_piece(self.wp3)
@@ -39,9 +42,6 @@ class Game:
         self.board.place_piece(self.bp7)
         self.board.place_piece(self.bp8)
 
-        self.board.place_piece(self.wk)
-        self.board.place_piece(self.bk)
-    
     def queen_game_creation(self):
         
         self.wq = Queen('white', 'active', 'd1')
@@ -83,10 +83,11 @@ class Game:
         self.board.place_piece(self.br2)
 
     def test_game_creation(self):
-        self.pawn_game_creation()
+        self.king_game_creation()
+        # self.pawn_game_creation()
         self.queen_game_creation()
-        self.bishop_game_creation()
-        self.knight_game_creation()
+        # self.bishop_game_creation()
+        # self.knight_game_creation()
         self.rook_game_creation()
 
     def standard_game_creation(self):
