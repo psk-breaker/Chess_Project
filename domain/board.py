@@ -863,19 +863,15 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
                         
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
 
         threat = False
-        nearest_pieces = []
+        
         file = FILE.index(square[0])
         rank = int(square[1])
         # top right
@@ -885,18 +881,13 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
 
         threat = False
-        nearest_pieces = []
 
         # upper left
         if file >=2 and rank <= 7:
@@ -905,18 +896,13 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
 
         threat = False
-        nearest_pieces = []
         # upper right
         if file <= 5 and rank <=7:
             target_file = FILE[file + 2]
@@ -924,17 +910,12 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
         threat = False
-        nearest_pieces = []
 
         # lower left
         if file >= 2 and rank >= 2:
@@ -943,17 +924,12 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
         threat = False
-        nearest_pieces = []
 
         # lower right
         if file <= 5 and rank >= 2:
@@ -962,17 +938,12 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
         threat = False
-        nearest_pieces = []
 
         # bottom left
         if file >= 1 and rank >= 3:
@@ -981,17 +952,12 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
         threat = False
-        nearest_pieces = []
         
         # bottom right
         if file <= 6 and rank >= 3:
@@ -1000,15 +966,11 @@ class Board:
             check_square = target_file + str(target_rank)
             check = self.get_piece(check_square)
             if check != 0:
-                if check.colour == king.colour and check != king:
-                    nearest_pieces.append(check)
-                elif check.colour != king.colour:
+                if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
         if threat == True and len(nearest_pieces) == 0:
             result = True
-        if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True
         
         
         # pawn check
