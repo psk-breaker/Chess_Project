@@ -867,7 +867,7 @@ class Board:
                     if check.piece_type == 'night':
                         threat = True
                         
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
 
         threat = False
@@ -884,7 +884,7 @@ class Board:
                 if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
 
         threat = False
@@ -899,7 +899,7 @@ class Board:
                 if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
 
         threat = False
@@ -913,7 +913,7 @@ class Board:
                 if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
         threat = False
 
@@ -927,7 +927,7 @@ class Board:
                 if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
         threat = False
 
@@ -941,7 +941,7 @@ class Board:
                 if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
         threat = False
 
@@ -955,7 +955,7 @@ class Board:
                 if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
         threat = False
         
@@ -969,12 +969,68 @@ class Board:
                 if check.colour != king.colour:
                     if check.piece_type == 'night':
                         threat = True
-        if threat == True and len(nearest_pieces) == 0:
+        if threat == True:
             result = True
-        
+        threat = False
         
         # pawn check
+        
+        # white pawn attacking top left
+        file = FILE.index(square[0])
+        rank = int(square[1])
+        if file < 7 and rank > 2:
+            target_file = FILE[file + 1]
+            target_rank = str(rank - 1)
+            check_square = target_file + target_rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour != king.colour and check.colour == 'white':
+                    if check.piece_type == 'pawn':
+                        threat = True
+        if threat == True:
+            result = True
+        threat = False    
 
+        # white pawn attacking top right
+        if file > 0 and rank > 2:
+            target_file = FILE[file - 1]
+            target_rank = str(rank - 1)
+            check_square = target_file + target_rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour != king.colour and check.colour == 'white':
+                    if check.piece_type == 'pawn':
+                        threat = True
+        if threat == True:
+            result = True
+        threat = False
+
+        # black pawn attacking bottom left
+        if file < 7 and rank < 7:
+            target_file = FILE[file + 1]
+            target_rank = str(rank + 1)
+            check_square = target_file + target_rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour != king.colour and check.colour == 'black':
+                    if check.piece_type == 'pawn':
+                        threat = True
+        if threat == True:
+            result = True
+        threat = False
+
+        # black pawn attacking bottom right
+        if file > 0  and rank < 7:
+            target_file = FILE[file - 1]
+            target_rank = str(rank + 1)
+            check_square = target_file + target_rank
+            check = self.get_piece(check_square)
+            if check != 0:
+                if check.colour != king.colour and check.colour == 'black':
+                    if check.piece_type == 'pawn':
+                        threat = True
+        if threat == True:
+            result = True
         # king check
 
         return result
