@@ -84,10 +84,10 @@ class Game:
 
     def test_game_creation(self):
         self.king_game_creation()
-        # self.pawn_game_creation()
+        self.pawn_game_creation()
         # self.queen_game_creation()
         # self.bishop_game_creation()
-        self.knight_game_creation()
+        # self.knight_game_creation()
         # self.rook_game_creation()
 
     def standard_game_creation(self):
