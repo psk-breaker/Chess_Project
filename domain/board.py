@@ -12,6 +12,8 @@ class Board:
                 rank.append(square)
             self.grid.append(rank)
             rank = []
+        self.white_pieces = []
+        self.black_pieces = []
 
     def list_board(self):
         nice_board = []
@@ -36,6 +38,10 @@ class Board:
         rank = -int(piece.location[1])
         file = FILE.index(piece.location[0])
         self.grid[rank][file] = piece
+        if piece.colour == 'white':
+            self.white_pieces.append(piece)
+        elif piece.colour == 'black':
+            self.black_pieces.append(piece)
 
     def get_piece(self, square):
         rank = -int(square[1])
@@ -1031,8 +1037,24 @@ class Board:
                         threat = True
         if threat == True:
             result = True
-        # king check
+        threat = False
 
+
+        # king check
+        if king.colour == 'white':
+            for piece in self.black_pieces:
+                if piece.piece_type == 'king':
+                    enemy = piece.location
+        elif king.colour == 'black':
+            for piece in self.white_pieces:
+                if piece.piece_type == 'king':
+                    enemy = piece.location
+        file_check = abs(FILE.index(square[0]) - FILE.index(enemy[0]))
+        rank_check = abs(int(square[1]) - int(enemy[1]))
+        if file_check <= 1 and rank_check <= 1:
+            threat = True
+        if threat == True:
+            result = True
         return result
         
 # end
