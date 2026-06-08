@@ -14,8 +14,8 @@ let greensq = null;
 
 async function fetchBoard() {
     const res = await fetch('/board');
-    const board = await res.json();
-    renderBoard(board);
+    const data = await res.json();
+    renderBoard(data.board);
 }
 
 
