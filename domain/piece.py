@@ -3,10 +3,11 @@ FILE = 'abcdefgh'
 
 class Piece:
 
-    def __init__(self, colour, piece_type, life, location):
+    def __init__(self, colour, piece_type, location, id=None):
         self.colour = colour
         self.piece_type = piece_type
-        self.life = life
+        self.id = id
+        self.life = 'active'
         self.location = location
         self.pinned = False
         self.move_history = []
@@ -23,8 +24,8 @@ class Piece:
         self.move_history.append(self.location)
 
 class King(Piece):
-    def __init__(self, colour, life, location):
-        super().__init__(colour=colour, piece_type='king', life=life, location=location)
+    def __init__(self, colour, location, id):
+        super().__init__(colour=colour, piece_type='king', location=location, id=id)
     
     def __str__(self):
         return super().__str__()
@@ -56,8 +57,8 @@ class King(Piece):
 
 
 class Queen(Piece):
-    def __init__(self, colour, life, location):
-        super().__init__(colour=colour, piece_type='queen', life=life, location=location)
+    def __init__(self, colour, location, id):
+        super().__init__(colour=colour, piece_type='queen', location=location, id=id)
     
     def __str__(self):
         return super().__str__()
@@ -87,8 +88,8 @@ class Queen(Piece):
 
 
 class Bishop(Piece):
-    def __init__(self, colour, life, location):
-        super().__init__(colour=colour, piece_type='bishop', life=life, location=location)
+    def __init__(self, colour, location, id):
+        super().__init__(colour=colour, piece_type='bishop', location=location, id=id)
     
     def __str__(self):
         return super().__str__()
@@ -116,8 +117,8 @@ class Bishop(Piece):
 
 
 class Knight(Piece):
-    def __init__(self, colour, life, location):
-        super().__init__(colour=colour, piece_type='night', life=life, location=location)
+    def __init__(self, colour, location, id):
+        super().__init__(colour=colour, piece_type='night', location=location, id=id)
     
     def __str__(self):
         return super().__str__()
@@ -145,8 +146,8 @@ class Knight(Piece):
     
 
 class Rook(Piece):
-    def __init__(self, colour, life, location):
-        super().__init__(colour=colour, piece_type='rook', life=life, location=location)
+    def __init__(self, colour, location, id):
+        super().__init__(colour=colour, piece_type='rook', location=location, id=id)
     
     def __str__(self):
         return super().__str__()
@@ -172,8 +173,8 @@ class Rook(Piece):
 
 
 class Pawn(Piece):
-    def __init__(self, colour, life, location):
-        super().__init__(colour=colour, piece_type='pawn', life=life, location=location)
+    def __init__(self, colour, location, id):
+        super().__init__(colour=colour, piece_type='pawn', location=location, id=id)
     
     def __str__(self):
         return super().__str__()
