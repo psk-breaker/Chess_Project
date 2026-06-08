@@ -1056,5 +1056,7 @@ class Board:
         if threat == True:
             result = True
         return result
-        
+
+    def in_check(self, king):
+        return self.threat_detection(king, king.location)   
 # end
