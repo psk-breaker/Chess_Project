@@ -9,25 +9,25 @@ class Game:
         self.board = Board()
 
     def king_game_creation(self):
-        self.wk = King('white', 'active', 'e1')
-        self.bk = King('black', 'active', 'e8')
+        self.wk = King('white', 'e1', id='wk')
+        self.bk = King('black', 'e8', id='bk')
         self.board.place_piece(self.wk)
         self.board.place_piece(self.bk)
 
     def pawn_game_creation(self):
-        self.wp1 = Pawn('white', 'active', 'a2')
-        self.wp2 = Pawn('white', 'active', 'b2')
-        self.wp3 = Pawn('white', 'active', 'c2')
-        self.wp6 = Pawn('white', 'active', 'f2')
-        self.wp7 = Pawn('white', 'active', 'g2')
-        self.wp8 = Pawn('white', 'active', 'h2')
+        self.wp1 = Pawn('white', 'a2', id='wp1')
+        self.wp2 = Pawn('white', 'b2', id='wp2')
+        self.wp3 = Pawn('white', 'c2', id='wp3')
+        self.wp6 = Pawn('white', 'f2', id='wp6')
+        self.wp7 = Pawn('white', 'g2', id='wp7')
+        self.wp8 = Pawn('white', 'h2', id='wp8')
 
-        self.bp1 = Pawn('black', 'active', 'a7')
-        self.bp2 = Pawn('black', 'active', 'b7')
-        self.bp3 = Pawn('black', 'active', 'c7')
-        self.bp6 = Pawn('black', 'active', 'f7')
-        self.bp7 = Pawn('black', 'active', 'g7')
-        self.bp8 = Pawn('black', 'active', 'h7')
+        self.bp1 = Pawn('black', 'a7', id='bp1')
+        self.bp2 = Pawn('black', 'b7', id='bp2')
+        self.bp3 = Pawn('black', 'c7', id='bp3')
+        self.bp6 = Pawn('black', 'f7', id='bp6')
+        self.bp7 = Pawn('black', 'g7', id='bp7')
+        self.bp8 = Pawn('black', 'h7', id='bp8')
 
         self.board.place_piece(self.wp1)
         self.board.place_piece(self.wp2)
@@ -44,27 +44,28 @@ class Game:
 
     def queen_game_creation(self):
         
-        self.wq = Queen('white', 'active', 'd1')
-        self.bq = Queen('black', 'active', 'd8')
+        self.wq = Queen('white', 'd1', id='wq1')
+        self.bq = Queen('black', 'd8', id='bq1')
 
         self.board.place_piece(self.wq) 
         self.board.place_piece(self.bq)
     
     def bishop_game_creation(self):
-        self.bb1 = Bishop('black', 'active', 'c8')
-        self.bb2 = Bishop('black', 'active', 'f8')
-        self.wb1 = Bishop('white', 'active', 'c1')
-        self.wb2 = Bishop('white', 'active', 'f1')
-        self.board.place_piece(self.bb1)
-        self.board.place_piece(self.bb2)
+        self.wb1 = Bishop('white', 'c1', id='wb1')
+        self.wb2 = Bishop('white', 'f1', id='wb2')
+        self.bb1 = Bishop('black', 'c8', id='bb1')
+        self.bb2 = Bishop('black', 'f8', id='bb2')
+        
         self.board.place_piece(self.wb1)
         self.board.place_piece(self.wb2)
+        self.board.place_piece(self.bb1)
+        self.board.place_piece(self.bb2)
     
     def knight_game_creation(self):
-        self.wn1 = Knight('white', 'active', 'b1')
-        self.wn2 = Knight('white', 'active', 'g1')
-        self.bn1 = Knight('black', 'active', 'b8')
-        self.bn2 = Knight('black', 'active', 'g8')
+        self.wn1 = Knight('white', 'b1', id='wn1')
+        self.wn2 = Knight('white', 'g1', id='wn2')
+        self.bn1 = Knight('black', 'b8', id='bn1')
+        self.bn2 = Knight('black', 'g8', id='bn2')
 
         self.board.place_piece(self.wn1)
         self.board.place_piece(self.wn2)
@@ -72,10 +73,10 @@ class Game:
         self.board.place_piece(self.bn2)
     
     def rook_game_creation(self):
-        self.wr1 = Rook('white', 'active', 'a1')
-        self.wr2 = Rook('white', 'active', 'h1')
-        self.br1 = Rook('black', 'active', 'a8')
-        self.br2 = Rook('black', 'active', 'h8')
+        self.wr1 = Rook('white', 'a1', id='wr1')
+        self.wr2 = Rook('white', 'h1', id='wr2')
+        self.br1 = Rook('black', 'a8', id='br1')
+        self.br2 = Rook('black', 'h8', id='br2')
 
         self.board.place_piece(self.wr1)
         self.board.place_piece(self.wr2)
@@ -91,23 +92,23 @@ class Game:
         # self.rook_game_creation()
 
     def standard_game_creation(self):
-        self.wp1 = Pawn('white', 'active', 'a2')
-        self.wp2 = Pawn('white', 'active', 'b2')
-        self.wp3 = Pawn('white', 'active', 'c2')
-        self.wp4 = Pawn('white', 'active', 'd2')
-        self.wp5 = Pawn('white', 'active', 'e2')
-        self.wp6 = Pawn('white', 'active', 'f2')
-        self.wp7 = Pawn('white', 'active', 'g2')
-        self.wp8 = Pawn('white', 'active', 'h2')
+        self.wp1 = Pawn('white', 'a2', id='wp1')
+        self.wp2 = Pawn('white', 'b2', id='wp2')
+        self.wp3 = Pawn('white', 'c2', id='wp3')
+        self.wp4 = Pawn('white', 'd2', id='wp4')
+        self.wp5 = Pawn('white', 'e2', id='wp5')
+        self.wp6 = Pawn('white', 'f2', id='wp6')
+        self.wp7 = Pawn('white', 'g2', id='wp7')
+        self.wp8 = Pawn('white', 'h2', id='wp8')
 
-        self.bp1 = Pawn('black', 'active', 'a7')
-        self.bp2 = Pawn('black', 'active', 'b7')
-        self.bp3 = Pawn('black', 'active', 'c7')
-        self.bp4 = Pawn('black', 'active', 'd7')
-        self.bp5 = Pawn('black', 'active', 'e7')
-        self.bp6 = Pawn('black', 'active', 'f7')
-        self.bp7 = Pawn('black', 'active', 'g7')
-        self.bp8 = Pawn('black', 'active', 'h7')
+        self.bp1 = Pawn('black', 'a7', id='bp1')
+        self.bp2 = Pawn('black', 'b7', id='bp2')
+        self.bp3 = Pawn('black', 'c7', id='bp3')
+        self.bp4 = Pawn('black', 'd7', id='bp4')
+        self.bp5 = Pawn('black', 'e7', id='bp5')
+        self.bp6 = Pawn('black', 'f7', id='bp6')
+        self.bp7 = Pawn('black', 'g7', id='bp7')
+        self.bp8 = Pawn('black', 'h7', id='bp8')
 
         self.wk = King('white', 'active', 'e1')
         self.bk = King('black', 'active', 'e8')
@@ -142,6 +143,7 @@ class Game:
             self.board.move_piece(piece, target)
             if piece.location == target:
                 self.turn_swap()
+                self.in_check()
         elif self.turn_check(piece) == False:
             raise ValueError(f"Not your turn {piece.colour}, it's {self.turn}'s turn")
     
@@ -160,4 +162,15 @@ class Game:
     def turn_swap(self):
         self.turn_counter *= -1
         self.turn = TURN[self.turn_counter]
+    
+    def in_check(self):
+        if self.turn == 'white':
+            for piece in self.board.white_pieces:
+                if piece.piece_type == 'king':
+                    king = piece
+        elif self.turn == 'black':
+            for piece in self.board.black_pieces:
+                if piece.piece_type == 'king':
+                    king = piece
+        return self.board.in_check(king)
     
