@@ -13,7 +13,18 @@ def index():
 
 @api.route('/board', methods=['GET'])
 def get_board():
-    return jsonify(game.board.list_board())
+    king_square = None
+    king = game.board.search_piece(game.turn, 'k')
+
+    hit = game.board.in_check(king)
+    if hit:
+        king_square = king.location
+
+    return jsonify({
+        "board": game.board.list_board(),
+        "in_check": hit,
+        "king_square": king_square
+        })
 
 
 @api.route('/move', methods=['POST'])
