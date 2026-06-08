@@ -48,12 +48,28 @@ class Board:
         file = FILE.index(square[0])
         return self.grid[rank][file]
     
+    def search_piece(self, colour, id=None):
+        # id must be n1 not wn1 etc. Build id[1] identifier later
+        if colour == 'white':
+            for piece in self.white_pieces:
+                if piece.id[1] == id[0]:
+                    target = piece
+        elif colour == 'black':
+            for piece in self.black_pieces:
+                if piece.id[1] == id[0]:
+                    target = piece
+        return target
+
     def remove_piece(self, square):
         rank = -int(square[1])
         file = FILE.index(square[0])
         piece = self.grid[rank][file]
         if piece != 0:
             piece.location = 'j0'
+            if piece.colour == 'white':
+                self.white_pieces.remove(piece)
+            elif piece.colour == 'black':
+                self.black_pieces.remove(piece)
             self.grid[rank][file] = 0
     
     def move_piece(self, piece, target):
