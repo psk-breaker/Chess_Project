@@ -33,3 +33,4 @@ body {
 .square.dark  { background: #b58863; }
 .square.selected { background: #a3f6fc !important; }
 .square.available { background: #5cf389 !important; }
+.in-check {box-shadow: inset 0 0 0 4px red;}
