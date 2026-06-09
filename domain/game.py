@@ -110,8 +110,8 @@ class Game:
         self.bp7 = Pawn('black', 'g7', id='bp7')
         self.bp8 = Pawn('black', 'h7', id='bp8')
 
-        self.wk = King('white', 'active', 'e1')
-        self.bk = King('black', 'active', 'e8')
+        self.wk = King('white', 'e1', id='wk')
+        self.bk = King('black', 'e8', id='bk')
 
         self.board.place_piece(self.wp1)
         self.board.place_piece(self.wp2)
