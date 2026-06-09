@@ -15,11 +15,11 @@ let greensq = null;
 async function fetchBoard() {
     const res = await fetch('/board');
     const data = await res.json();
-    renderBoard(data.board);
+    renderBoard(data.board, data.in_check, data.king_square);
 }
 
 
-function renderBoard(board) {
+function renderBoard(board, inCheck, kingSquare) {
     const container = document.getElementById('board');
     container.innerHTML = '';
 
@@ -63,6 +63,13 @@ function renderBoard(board) {
 
         container.appendChild(rowDiv);
     });
+
+    if (inCheck && kingSquare) {
+    const [i, j] = toBoardNotation(kingSquare);
+
+    const kingElement = container.children[i].children[j];
+    kingElement.classList.add("in-check");
+    };
 
 
 };
