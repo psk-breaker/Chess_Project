@@ -25,6 +25,9 @@ The application allows users to play chess in the browser, with moves processed 
 - JSON-based communication between frontend and backend
 - Clean separation between domain logic and web layer
 
+<img width="840" height="800" alt="20260725-1650-58 8725365" src="https://github.com/user-attachments/assets/dda31694-857f-4d21-b423-9a579b415660" />
+
+
 > Current implementation includes full board and core game flow. Additional rules (e.g. en passant, promotion, castling, stalemate and checkmate) are planned.
 
 ---
