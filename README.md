@@ -28,6 +28,7 @@ The application allows users to play chess in the browser, with moves processed 
 
 <img width="840" height="800" alt="20260725-1650-58 8725365" src="https://github.com/user-attachments/assets/dda31694-857f-4d21-b423-9a579b415660" />
 
+<img width="838" height="806" alt="20260725-1723-32 1902823" src="https://github.com/user-attachments/assets/15711038-2110-4705-9d84-e93b15c1886f" />
 
 > Current implementation includes full board and nearly complete gameplay. Additional rules (e.g. en passant, promotion, castling, plus stale/checkmate detection) are planned.
 
