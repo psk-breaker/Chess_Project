@@ -1,6 +1,7 @@
 # ♟️ Chess Web App
 
 A full-stack chess application built from scratch, combining a custom Python chess engine with a Flask-based API and a lightweight JavaScript frontend for interactive play in the browser.
+<img width="1102" height="872" alt="20260725-1638-41 3039127" src="https://github.com/user-attachments/assets/04a7d6ca-3373-4379-8f85-e3b3a38aaf35" />
 
 ---
 
@@ -24,7 +25,7 @@ The application allows users to play chess in the browser, with moves processed 
 - JSON-based communication between frontend and backend
 - Clean separation between domain logic and web layer
 
-> Current implementation includes pawns and core game flow. Additional rules (e.g. en passant, promotion, castling, threat, gameover) are planned.
+> Current implementation includes full board and core game flow. Additional rules (e.g. en passant, promotion, castling, stalemate and checkmate) are planned.
 
 ---
 
