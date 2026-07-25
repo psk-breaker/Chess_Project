@@ -74,26 +74,34 @@ requirements.txt
 
 ```bash
 git clone https://github.com/psk-breaker/Chess_Project.git
+```
 cd Chess_Project
+
 2. Install dependencies
+```powershell
 pip install -r requirements.txt
+```
+
 3. Run the app
 python app.py
-4. Open in browser
+
+5. Open in browser
 http://127.0.0.1:5000
+
 🧪 Running Tests
 pytest
+
 📌 Design Highlights
 Domain-first design: Chess logic is fully decoupled from Flask
 API-driven interaction: Frontend communicates exclusively via JSON endpoints
 Testable core logic: Engine components validated with unit tests
+
 🔮 Future Improvements
 Implement full chess rules (gameover detection, castling, promotion, en passant)
 Improve UI (highlighting, animations, drag-and-drop)
 Add game state persistence (database)
 Multiplayer support (sessions or WebSockets)
 Deploy to AWS with Docker
-💡 Motivation
 
-This project was built to explore a hard logical coding challenge in creating a chess engine, with full-stack development integrating backend systems, API design, and frontend interaction, while applying software engineering principles such as modularity, testing, clean architecture and aws hosting as a personal project. I hope that users will eventually be able to learn how to play chess
-as I develop learning material for the website, such as miniture-games and chess puzzles.
+💡 Motivation
+This project was built to explore a hard logical coding challenge in creating a chess engine, with full-stack development integrating backend systems, API design, and frontend interaction, while applying software engineering principles such as modularity, testing, clean architecture and aws hosting as a personal project. I hope that users will eventually be able to learn how to play chess as I develop learning material for the website, such as miniture-games and chess puzzles.
