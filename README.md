@@ -1,6 +1,8 @@
-# ♟️ Chess Web App
+# ♔ Chess Web App
 
 A full-stack chess application built from scratch, combining a custom Python chess engine with a Flask-based API and a lightweight JavaScript frontend for interactive play in the browser.
+
+<img width="1102" height="872" alt="20260725-1638-41 3039127" src="https://github.com/user-attachments/assets/04a7d6ca-3373-4379-8f85-e3b3a38aaf35" />
 
 ---
 
@@ -18,13 +20,17 @@ The application allows users to play chess in the browser, with moves processed 
 
 ## 🧠 Key Features
 
+- Backend legal move validation with threat detection via a custom chess engine
 - Interactive chessboard rendered in the browser
 - Click-to-move piece interaction
-- Backend move validation via a custom chess engine
-- JSON-based communication between frontend and backend
+- JSON http-apis built with flask
 - Clean separation between domain logic and web layer
 
-> Current implementation includes pawns and core game flow. Additional rules (e.g. en passant, promotion, castling, threat, gameover) are planned.
+<img width="840" height="800" alt="20260725-1650-58 8725365" src="https://github.com/user-attachments/assets/dda31694-857f-4d21-b423-9a579b415660" />
+
+<img width="838" height="806" alt="20260725-1723-32 1902823" src="https://github.com/user-attachments/assets/15711038-2110-4705-9d84-e93b15c1886f" />
+
+> Current implementation includes full board and nearly complete gameplay. Additional rules (e.g. en passant, promotion, castling, plus stale/checkmate detection) are planned.
 
 ---
 
@@ -82,11 +88,12 @@ Domain-first design: Chess logic is fully decoupled from Flask
 API-driven interaction: Frontend communicates exclusively via JSON endpoints
 Testable core logic: Engine components validated with unit tests
 🔮 Future Improvements
-Implement full chess rules (threat detection, gameover detection, castling, promotion, en passant)
+Implement full chess rules (gameover detection, castling, promotion, en passant)
 Improve UI (highlighting, animations, drag-and-drop)
 Add game state persistence (database)
 Multiplayer support (sessions or WebSockets)
 Deploy to AWS with Docker
 💡 Motivation
 
-This project was built to explore full-stack development by integrating backend systems, API design, and frontend interaction, while applying software engineering principles such as modularity, testing, and clean architecture.
+This project was built to explore a hard logical coding challenge in creating a chess engine, with full-stack development integrating backend systems, API design, and frontend interaction, while applying software engineering principles such as modularity, testing, clean architecture and aws hosting as a personal project. I hope that users will eventually be able to learn how to play chess
+as I develop learning material for the website, such as miniture-games and chess puzzles.
