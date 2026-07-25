@@ -1,20 +1,43 @@
 <!DOCTYPE html>
-<html>
-
-
+<html lang="en">
 
 <head>
-  <title>Chess</title>
-  <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>Chess</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
-
 <body>
-    <h1>Chess</h1>
+
+<header>
+    <h1>♔ Chess</h1>
+</header>
+
+<section class="hero">
+    <h2>Play Chess Online</h2>
+    <p>Challenge your friends or practise your skills.</p>
+</section>
+
+<div class="game-container">
+
     <div id="board"></div>
-    <script src="/static/board.js"></script>
+
+    <aside class="sidebar">
+
+        <button>New Game</button>
+        <button>Undo Move</button>
+        <button>Flip Board</button>
+
+        <div class="status">
+            <h3>Game Status</h3>
+            <p>White to move</p>
+        </div>
+
+    </aside>
+
+</div>
+
+<script src="/static/board.js"></script>
+
 </body>
-
-
-
 </html>
