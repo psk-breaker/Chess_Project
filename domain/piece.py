@@ -234,3 +234,15 @@ class Pawn(Piece):
                     return True
             else:
                 raise ValueError(f'Capture not possible')
+
+    def promotion_check(self, target):
+        target_rank = int(target[1])
+        if self.colour == 'white' and target_rank == 8:
+            return True
+        elif self.colour == 'black' and target_rank == 0:
+            return True
+
+        return False
+
+    def promote(self):
+        pass
