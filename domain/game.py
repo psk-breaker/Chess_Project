@@ -138,10 +138,21 @@ class Game:
         self.knight_game_creation()
         self.rook_game_creation()
 
+    def promote_piece(self, piece):
+        if piece.colour == 'white':
+            if self.board.white_promotion_counter == 0:
+                self.wx1 = Queen('white', piece.location, 'wq2')
+                self.board.white_promotion_counter += 1
+            if self.board.white_promotion_counter == 1:
+                self.wx2 = Queen('white', piece.location, 'wq3')
+                self.board.white_promotion_counter += 1
+        pass
+
     def move_piece(self, piece, target):
         if self.turn_check(piece):
             self.board.move_piece(piece, target)
             if piece.location == target:
+                self.promotion(piece, target)
                 self.turn_swap()
                 self.in_check()
         elif self.turn_check(piece) == False:
@@ -152,6 +163,12 @@ class Game:
         target = str(end)
         print(f'The web says that the target square is: {target}')
         self.move_piece(piece, target)
+
+    def promotion(self, piece, target):
+        if self.board.promotion(piece, target):
+            if piece.colour == 'white':
+                # need to add a feature to choose the promotion as id here
+                pass
     
     def turn_check(self, piece):
         if self.turn == piece.colour:
