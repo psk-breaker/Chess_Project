@@ -14,6 +14,8 @@ class Board:
             rank = []
         self.white_pieces = []
         self.black_pieces = []
+        self.white_promotion_counter = 0
+        self.black_promotion_counter = 0
 
     def list_board(self):
         nice_board = []
@@ -94,7 +96,13 @@ class Board:
                     self.remove_piece(target)
                     self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
                     piece.move(target)
-                    self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece             
+                    self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
+
+    def promotion(self, piece, target):
+        if piece.piece_type == 'pawn':
+            if piece.promotion_check(target):
+                return True
+        pass           
 
     def occupied_square(self, target):
         piece = self.get_piece(target)
