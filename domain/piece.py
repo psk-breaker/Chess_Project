@@ -239,10 +239,11 @@ class Pawn(Piece):
         target_rank = int(target[1])
         if self.colour == 'white' and target_rank == 8:
             return True
-        elif self.colour == 'black' and target_rank == 0:
+        elif self.colour == 'black' and target_rank == 1:
             return True
 
         return False
 
     def promote(self):
-        pass
+        # promoted piece goes to heaven
+        self.location = 'h1'
