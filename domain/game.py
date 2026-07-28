@@ -2,6 +2,8 @@ from domain.board import Board
 from domain.piece import Pawn, Rook, Knight, Bishop, Queen, King
 
 TURN = ['BLANK', 'white', 'black']
+FILE = 'abcdefgh'
+
 class Game:
     def __init__(self):
         self.turn_counter = 1
@@ -142,11 +144,21 @@ class Game:
         if piece.colour == 'white':
             if self.board.white_promotion_counter == 0:
                 self.wx1 = Queen('white', piece.location, 'wq2')
+                self.board.place_piece(self.wx1)
                 self.board.white_promotion_counter += 1
             if self.board.white_promotion_counter == 1:
                 self.wx2 = Queen('white', piece.location, 'wq3')
+                self.board.place_piece(self.wx2)
                 self.board.white_promotion_counter += 1
-        pass
+        if piece.colour == 'black':
+            if self.board.black_promotion_counter == 0:
+                self.bx1 = Queen('black', piece.location, 'bq2')
+                self.board.place_piece(self.bx1)
+                self.board.black_promotion_counter += 1
+            if self.board.black_promotion_counter == 1:
+                self.bx2 = Queen('black', piece.location, 'bq3')
+                self.board.place_piece(self.bx2)
+                self.board.black_promotion_counter += 1
 
     def move_piece(self, piece, target):
         if self.turn_check(piece):
@@ -167,8 +179,16 @@ class Game:
     def promotion(self, piece, target):
         if self.board.promotion(piece, target):
             if piece.colour == 'white':
-                # need to add a feature to choose the promotion as id here
-                pass
+                self.board.white_pieces.remove(piece)
+                self.board.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+                self.promote_piece(piece)
+                piece.promote()
+            if piece.colour == 'black':
+                self.board.black_pieces.remove(piece)
+                self.board.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+                self.promote_piece(piece)
+                piece.promote()
+
     
     def turn_check(self, piece):
         if self.turn == piece.colour:
