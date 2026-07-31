@@ -83,20 +83,21 @@ class Board:
         if occupancy == piece.colour:
            raise ValueError(f"Can't take own pieces") 
         
-        elif piece.legal_move_check(target, occupancy) and target in available and piece.pinned == False:
-            if occupancy == 0:
-                print(f'You just made the move {piece.location} to {target}')
-                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
-                piece.move(target)
-                self.grid[rank][file] = piece  
-    
-            elif occupancy != piece.colour:
-                if piece.capture_rule(target):
-                    print(f'You just captured from {piece.location} to {target}')
-                    self.remove_piece(target)
+        elif piece.legal_move_check(target, occupancy) and target in available:
+            if piece.pinned == False or piece.enemy.location == target:
+                if occupancy == 0:
+                    print(f'You just made the move {piece.location} to {target}')
                     self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
                     piece.move(target)
-                    self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
+                    self.grid[rank][file] = piece  
+        
+                elif occupancy != piece.colour:
+                    if piece.capture_rule(target):
+                        print(f'You just captured from {piece.location} to {target}')
+                        self.remove_piece(target)
+                        self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+                        piece.move(target)
+                        self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
 
     def promotion(self, piece, target):
         if piece.piece_type == 'pawn':
@@ -676,6 +677,7 @@ class Board:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check
             
         
         threat = False
@@ -700,6 +702,7 @@ class Board:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check
 
         threat = False
         nearest_pieces = []
@@ -723,6 +726,7 @@ class Board:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check
 
         threat = False
         nearest_pieces = []
@@ -746,6 +750,7 @@ class Board:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check
 
         threat = False
         nearest_pieces = []
@@ -781,7 +786,8 @@ class Board:
         if threat == True and len(nearest_pieces) == 0:
             result = True
         if threat== True and len(nearest_pieces) == 1:
-            nearest_pieces[0].pinned = True 
+            nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check 
         threat = False
         nearest_pieces = []
 
@@ -814,6 +820,7 @@ class Board:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check
         threat = False
         nearest_pieces = []
 
@@ -846,6 +853,7 @@ class Board:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check
         threat = False
         nearest_pieces = []
 
@@ -878,6 +886,7 @@ class Board:
             result = True
         if threat== True and len(nearest_pieces) == 1:
             nearest_pieces[0].pinned = True
+            nearest_pieces[0].enemy = check
 
         threat = False
         nearest_pieces = []
@@ -1088,7 +1097,9 @@ class Board:
         if colour == 'white':
             for piece in self.white_pieces:
                 piece.pinned = False
+                piece.enemy = None
         if colour == 'black':
             for piece in self.black_pieces:
                 piece.pinned = False
+                piece.enemy = None
 # end
