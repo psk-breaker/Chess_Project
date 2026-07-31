@@ -165,6 +165,7 @@ class Game:
             self.board.move_piece(piece, target)
             if piece.location == target:
                 self.promotion(piece, target)
+                self.board.unpin_pieces(self.turn)
                 self.turn_swap()
                 self.in_check()
         elif self.turn_check(piece) == False:
