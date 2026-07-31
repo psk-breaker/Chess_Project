@@ -10,6 +10,7 @@ class Piece:
         self.life = 'active'
         self.location = location
         self.pinned = False
+        self.enemy = None
         self.move_history = []
         self.move_history.append(location)
 
