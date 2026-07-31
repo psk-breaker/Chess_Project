@@ -83,7 +83,7 @@ class Board:
         if occupancy == piece.colour:
            raise ValueError(f"Can't take own pieces") 
         
-        elif piece.legal_move_check(target, occupancy) and target in available:
+        elif piece.legal_move_check(target, occupancy) and target in available and piece.pinned == False:
             if occupancy == 0:
                 print(f'You just made the move {piece.location} to {target}')
                 self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
@@ -1082,5 +1082,13 @@ class Board:
         return result
 
     def in_check(self, king):
-        return self.threat_detection(king, king.location)   
+        return self.threat_detection(king, king.location)
+
+    def unpin_pieces(self, colour):
+        if colour == 'white':
+            for piece in self.white_pieces:
+                piece.pinned = False
+        if colour == 'black':
+            for piece in self.black_pieces:
+                piece.pinned = False
 # end
