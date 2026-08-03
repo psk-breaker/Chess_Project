@@ -176,6 +176,7 @@ class Rook(Piece):
 class Pawn(Piece):
     def __init__(self, colour, location, id):
         super().__init__(colour=colour, piece_type='pawn', location=location, id=id)
+        self.enpassant = False
     
     def __str__(self):
         return super().__str__()
