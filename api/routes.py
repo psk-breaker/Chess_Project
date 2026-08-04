@@ -46,7 +46,7 @@ def available_moves():
     data = request.json
     selected_square = data['sq']
     selected_square = str(selected_square)
-    print(f'legal roue square: {selected_square}')
+    print(f'legal route square: {selected_square}')
     piece = game.board.get_piece(selected_square)
     ans = game.board.available_moves(piece)
     return jsonify(ans)
