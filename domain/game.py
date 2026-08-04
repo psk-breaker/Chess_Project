@@ -167,6 +167,7 @@ class Game:
                 self.promotion(piece, target)
                 self.board.unpin_pieces(self.turn)
                 self.turn_swap()
+                self.enpassant()
                 self.in_check()
         elif self.turn_check(piece) == False:
             raise ValueError(f"Not your turn {piece.colour}, it's {self.turn}'s turn")
@@ -190,7 +191,6 @@ class Game:
                 self.promote_piece(piece)
                 piece.promote()
 
-    
     def turn_check(self, piece):
         if self.turn == piece.colour:
             return True
@@ -211,4 +211,7 @@ class Game:
                 if piece.piece_type == 'king':
                     king = piece
         return self.board.in_check(king)
+
+    def enpassant(self):
+        self.board.enpassant_clear(self.turn)
     
