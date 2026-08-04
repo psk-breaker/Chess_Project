@@ -216,6 +216,7 @@ class Pawn(Piece):
             raise ValueError(f'Only possible on first move')
     
     def move(self, target):
+        self.enpassant_check(target)
         super().move(target)
     
     def capture_rule(self, target):
@@ -236,6 +237,15 @@ class Pawn(Piece):
                     return True
             else:
                 raise ValueError(f'Capture not possible')
+        return False
+
+    def enpassant_rule(self, target):
+        return self.capture_rule(target)
+
+    def enpassant_check(self, target):
+        if abs(int(self.location[1]) - int(target[1])) == 2:
+            self.enpassant = True
+            print('Enpassantable!')
 
     def promotion_check(self, target):
         target_rank = int(target[1])
