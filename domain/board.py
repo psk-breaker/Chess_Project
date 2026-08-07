@@ -83,10 +83,22 @@ class Board:
 
         
         if occupancy == piece.colour:
-            raise ValueError(f"Can't take own pieces") 
-        
-        elif piece.legal_move_check(target, occupancy) and target in available:
-            print(102)
+            raise ValueError(f"Can't take own pieces")
+         
+        try:
+            if self.enpassant_rule(piece, target):
+                print(f'You enpassant captured on: {target}')
+                foe_square = str(target[0]) + str(piece.location[1])
+                self.remove_piece(foe_square)
+                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+                piece.move(target)
+                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
+                self.board_history.append(piece.piece_type[0]+target)
+                return
+        except ValueError as e:
+            print(f'Eboard.movepiece - Enpassant move failed: {e}')
+
+        if piece.legal_move_check(target, occupancy) and target in available:
             if piece.pinned == False or piece.enemy.location == target:
                 if occupancy == 0:
                     print(f'You just made the move {piece.location} to {target}')
@@ -102,20 +114,7 @@ class Board:
                         self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
                         piece.move(target)
                         self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
-                        self.board_history.append(piece.piece_type[0]+target)
-
-            print(301)
-        # elif self.enpassant_rule(piece, target):
-        #     print(f'You enpassant captured on: {target}')
-        #     foe_square = str(target[0]) + str(piece.location[1])
-        #     self.remove_piece(foe_square)
-        #     self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
-        #     piece.move(target)
-        #     self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = piece
-        #     self.board_history.append(piece.piece_type[0]+target)
-        #     return
-
-        
+                        self.board_history.append(piece.piece_type[0]+target)        
 
     def promotion(self, piece, target):
         if piece.piece_type == 'pawn':
@@ -1143,8 +1142,8 @@ class Board:
                     print(f'enpassant-able foe?: {foe_square}')
                     foe = self.get_piece(foe_square)
                     if foe != 0:
-                        if foe.piece_type == 'pawn':
-                            if foe.enpassant:
+                        if foe.piece_type == 'pawn' and foe.colour != piece.colour:
+                            if foe.enpassant == True:
                                 enpassant_squares.append(target)
                                 print(f'Can enpassant here: {target}')
     
@@ -1155,21 +1154,41 @@ class Board:
                     print(f'enpassant-able foe?: {foe_square}')
                     foe = self.get_piece(foe_square)
                     if foe != 0:
-                        if foe.piece_type == 'pawn':
-                            if foe.enpassant:
+                        if foe.piece_type == 'pawn' and foe.colour != piece.colour:
+                            if foe.enpassant == True:
                                 enpassant_squares.append(target)
 
             elif piece.colour == 'black':
-                pass
+                # left
+                if file >= 1:
+                    target = FILE[file - 1] + str(rank - 1)
+                    foe_square = FILE[file - 1] + str(rank)
+                    print(f'enpassant-able foe?: {foe_square}')
+                    foe = self.get_piece(foe_square)
+                    if foe != 0:
+                        if foe.piece_type == 'pawn':
+                            if foe.enpassant:
+                                enpassant_squares.append(target)
+                                print(f'Can enpassant here: {target}')
+                
+                # right
+                if file <= 6:
+                    target = FILE[file + 1] + str(rank - 1)
+                    foe_square = FILE[file + 1] + str(rank)
+                    print(f'enpassant-able foe?: {foe_square}')
+                    foe = self.get_piece(foe_square)
+                    if foe != 0:
+                        if foe.piece_type == 'pawn':
+                            if foe.enpassant:
+                                enpassant_squares.append(target)
 
         return enpassant_squares
 
     def enpassant_rule(self, piece, target):
         if piece.piece_type == 'pawn':
             if piece.enpassant_rule(target):
-                print(201)
-                return True
-        print(202)
+                squares = self.enpassant_move(piece)
+                return target in squares
         return False
 
     def enpassant_clear(self, turn):
