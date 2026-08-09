@@ -98,6 +98,35 @@ class Board:
         except ValueError as e:
             print(f'Eboard.movepiece - Enpassant move failed: {e}')
 
+        try:
+            if self.castling_rule(piece, target):
+                print(f'You castled on: {target}')
+                rook_square = 'h1'
+                castle_target = 'f1'
+                notation = ''
+                if file == 2:
+                    rook_square = 'a' + target[1]
+                    castle_target = 'd' + str(target[1])
+                    notation = '0-0-0'
+                elif file == 6:
+                    rook_square = 'h' + target[1]
+                    castle_target = 'f' + str(target[1])
+                    notation = '0-0'
+                rook = self.get_piece(rook_square)
+                print(f'{rook} on {rook_square}')
+
+                self.grid[-int(piece.location[1])][FILE.index(piece.location[0])] = 0
+                piece.move(target)
+                self.grid[rank][file] = piece
+
+                self.grid[-int(rook_square[1])][FILE.index(rook_square[0])] = 0
+                rook.move(castle_target)
+                self.grid[-int(castle_target[1])][FILE.index(castle_target[0])] = rook
+                self.board_history.append(notation)
+                return
+        except ValueError as e:
+            print(f'Eboard.movepiece - Castling failed: {e}')
+
         if piece.legal_move_check(target, occupancy) and target in available:
             if piece.pinned == False or piece.enemy.location == target:
                 if occupancy == 0:
@@ -132,6 +161,7 @@ class Board:
     def available_moves(self, piece):
         if piece == 0:
             return
+        true_available_squares = []
         available = []
         rank = 8
         for row in self.grid:
@@ -150,14 +180,18 @@ class Board:
                     available.append(target)
             rank -= 1
 
+        castling_squares = self.castling_move(piece)
+        for square in castling_squares:
+            true_available_squares.append(square)
+            print(f'Adding castling square: {castling_squares}')
+
         enpassant_squares = self.enpassant_move(piece)
         for square in enpassant_squares:
             available.append(enpassant_squares[0])
             print(f'appended to available: {available}')
             
         unblocked_squares = self.blocked_check(piece) 
-
-        true_available_squares = []  
+  
         for square in available:
             if square in unblocked_squares:
                 true_available_squares.append(square)
@@ -676,6 +710,7 @@ class Board:
             elif result == True:
                 print(f'{square} is dangerous to move to')
         return unblocked
+
 
     def threat_detection(self, king, square):
         result = False
@@ -1200,4 +1235,53 @@ class Board:
             for piece in self.black_pieces:
                 if piece.piece_type == 'pawn':
                     piece.enpassant = False
+
+    def castling_move(self, piece):
+        castling_squares = []
+        file = int(FILE.index(piece.location[0]))
+        rank = int(piece.location[1])
+        if piece.piece_type == 'king':
+            if len(piece.move_history) == 1:
+
+                # left
+                for i in range(3):
+                    target = FILE[file - 1 - i] + str(rank)
+                    obstruction = self.get_piece(target)
+                    if obstruction != 0:
+                        break
+                    if i < 2:
+                        continue
+                    partner = FILE[file - 2 - i] + str(rank)
+                    rook = self.get_piece(partner)
+                    if rook !=0:
+                        if rook.piece_type == 'rook' and len(rook.move_history) == 1:
+                            castling_squares.append('c' + str(rank))
+
+
+                # right
+                for i in range(2):
+                    target = FILE[file + 1 + i] + str(rank)
+                    obstruction = self.get_piece(target)
+                    if obstruction != 0:
+                        break
+                    if i == 0:
+                        continue
+                    print(21)
+                    partner = FILE[file + 2 + i] + str(rank)
+                    rook = self.get_piece(partner)
+                    if rook !=0:
+                        print(22)
+                        if rook.piece_type == 'rook' and len(rook.move_history) == 1:
+                            castling_squares.append(target)
+                        print(f'diag: {partner} {rook} {rook.move_history}')
+
+        print(f'here are the castling squares: {castling_squares}')
+        return castling_squares          
+
+    def castling_rule(self, piece, target):
+        if piece.piece_type == 'king':
+            if piece.castling_rule(target):
+                squares = self.castling_move(piece)
+                return target in squares
+        return False
 # end
