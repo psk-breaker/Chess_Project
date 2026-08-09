@@ -56,6 +56,16 @@ class King(Piece):
         # King has no exclusive capture rule
         return True
 
+    def castling_rule(self, target):
+        if len(self.move_history) == 1:
+            if self.colour == 'white':
+                if target == 'c1' or target == 'g1':
+                    return True
+            elif self.colour == 'black':
+                if target == 'c8' or target == 'g8':
+                    return True
+        return False
+
 
 class Queen(Piece):
     def __init__(self, colour, location, id):
